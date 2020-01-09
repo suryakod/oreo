@@ -14,9 +14,9 @@ class User:
         self._addr = addr
         self.userId = None
         self.is_login = False
-        self.login_session_data = None
+        #self.login_session_data = None
         self.logged_users = None
-        self.load_session_data()
+        #self.load_session_data()
         self.client_directory = None
         self.read_file_index = {}
         self.char_count = 100
@@ -46,7 +46,7 @@ class User:
 
     
     def login(self,userId,psw):
-        pass
+        
 
     def delete(self,userId,pws):
         pass
