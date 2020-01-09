@@ -16,7 +16,7 @@ if privilege.lower() == 'admin':
     moment['isAdmin'] = 1
 else:
     moment['isAdmin'] = 0
-logindata = logindata.append(temp)
+logindata = logindata.append(moment)
 logindata.to_csv("root/login.csv", index=False)
 loaddata()
 pathlib.mkdir(pathlib.path.join("data", user))
@@ -27,6 +27,6 @@ if login:
     print("\nAlready logged in")            
 if user not in logindata['username'].tolist():
     print("\nUsername not registered")
-if password != logindata.loc[slogin_session_data['username'] == user, 'password'].iloc[0])
+if password != logindata.loc[logindata['username'] == user, 'password'].iloc[0]:
     print("\nWrong password!")
 
