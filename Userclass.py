@@ -2,33 +2,26 @@ import pathlib
 import pandas
 
 class User:
-    userId = ""
-    
-    privilage = ""
-    path = ""
-    addr = ()
-
-
     def __init__(self,path,addr):
         self.path = path
         self._addr = addr
         self.userId = None
         self.is_login = False
-        #self.login_session_data = None
+        self.loginusers = None
         self.logged_users = None
         #self.load_session_data()
         self.client_directory = None
-        self.read_file_index = {}
+        self.rdindex = {}
         self.char_count = 100
 
-    def register(self,userId,psw,privilage):
+    def register(self,userId,psw,privilege):
        
         logindata = pandas.read_csv('root/login.csv')
 
-        if user in logindata['username'].tolist():
+        if userId in logindata['username'].tolist():
             print("\nUsername not available")
-        if user == "" or psw == "" or privilege == "":
-        print("\nYou cannot register empty user")
+        if userId == "" or psw == "" or privilege == "":
+            print("\nYou cannot register empty user")
         moment = pandas.DataFrame(columns=['username'])
         moment['username'] = [userId]
         moment['password'] = psw
@@ -36,10 +29,9 @@ class User:
             moment['isAdmin'] = 1
         else:
             moment['isAdmin'] = 0
-        logindata = logindata.append(temp)
-        logindata.to_csv("root/login.csv", index=False)
-        loaddata()
-        pathlib.mkdir(pathlib.path.join("data", user))
+        logindata = logindata.append(moment)
+        logindata.to_csv("ServerAccessSession/Users.csv", index=False)
+        pathlib.Path.mkdir(pathlib.Path.join("data", self.userId))
         print("\nRegistered user successfully.")
 
 
@@ -52,31 +44,37 @@ class User:
         loginuser = pandas.read.csv('root/users.csv')
         
         tmoment = pandas.DataFrame(columns=['username'])
-        tmoment['username'] = [user]
+        tmoment['username'] = [userId]
         loginuser = loginuser.append(tmoment)
         loginuser.to_csv('root/users.csv', index=False)
 
 
-        if login:
+        if self.islogin:
             print("\nAlready logged in")            
-        if user not in logindata['username'].tolist():
+        if userId not in logindata['username'].tolist():
             print("\nUsername not registered")
-        if password != logindata.loc[logindata['username'] == user, 'password'].iloc[0]:
+        if psw != logindata.loc[logindata['username'] == userId, 'password'].iloc[0]:
             print("\nWrong password!")
-        if user in loginuser['username'].tolist():
+        if userId in loginuser['username'].tolist():
             print("\nLogged in from different address")
         print("\nLogin completed.")    
 
+        
+    def logout(self):
+
+        self.loginuser = pandas.read.csv('root/users.csv')
         try:
-            if user in loginuser['username'].tolist():
+            if self.userId in loginuser['username'].tolist():
                 usrlist = loginuser['username'].tolist().remove(user)
                 loginuser['username'] = usrlist
                 loginuser.to_csv("root/users.csv", index=False)
             user = None
-            rdindex = {}
+            self.rdindex = {}
             print("\nSigned out")
         except KeyError:
             print("\nSigned out")
+
+
 
     def delete(self,userId,pws):
         pass
