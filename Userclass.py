@@ -6,7 +6,7 @@ class User:
         self.path = path
         self._addr = addr
         self.userId = None
-        self.is_login = False
+        self.islogin = False
         self.loginusers = None
         self.logged_users = None
         #self.load_session_data()
@@ -16,7 +16,7 @@ class User:
 
     def register(self,userId,psw,privilege):
        
-        logindata = pandas.read_csv('root/login.csv')
+        logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
         if userId in logindata['username'].tolist():
             print("\nUsername not available")
@@ -31,7 +31,11 @@ class User:
             moment['isAdmin'] = 0
         logindata = logindata.append(moment)
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
-        pathlib.Path.mkdir(pathlib.Path.join("data", self.userId))
+        directoryname = str(self.userId)
+        filepath = "GitHub/oreo/Root/Admin" + directoryname
+        p = pathlib.Path(filepath)
+        p.mkdir(parents=True,exist_ok=True)
+        #pathlib.Path.join("data", self.userId)
         print("\nRegistered user successfully.")
 
 
@@ -39,7 +43,7 @@ class User:
     
     def login(self,userId,psw):
 
-        login = False
+        self.islogin = False
         logindata = pandas.read_csv('root/login.csv')
         loginuser = pandas.read.csv('root/users.csv')
         
