@@ -44,7 +44,7 @@ class User:
 
         #self.islogin = False
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
+        loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         
 
         if self.islogin:
@@ -69,7 +69,7 @@ class User:
         
     def logout(self):
 
-        loginuser = pandas.read.csv('root/users.csv')
+        loginuser = pandas.read_csv('root/users.csv')
         try:
             if self.userId in loginuser['username'].tolist():
                 usrlist = loginuser['username'].tolist().remove(user)
