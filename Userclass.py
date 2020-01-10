@@ -67,15 +67,17 @@ class User:
         print("\nLogin completed.")    
 
         
-    def logout(self):
+    def quit(self):
 
-        loginuser = pandas.read.csv('root/users.csv')
+        loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
         try:
             if self.userId in loginuser['username'].tolist():
-                usrlist = loginuser['username'].tolist().remove(user)
+                usrlist = loginuser['username'].tolist().remove(self.userId)
                 loginuser['username'] = usrlist
-                loginuser.to_csv("root/users.csv", index=False)
-            user = None
+                loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
+            self.userId = None
+            self.client_directory= ""
+            self.islogin = False
             self.rdindex = {}
             print("\nSigned out")
         except KeyError:
