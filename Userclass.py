@@ -57,7 +57,7 @@ class User:
             print("\nLogged in from different address")
 
         self.is_login = True
-        self.username = user
+        self.username = userId
         self.client_directory = ""
         tmoment = pandas.DataFrame(columns=['username'])
         tmoment['username'] = [userId]
