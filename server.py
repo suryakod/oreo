@@ -1,7 +1,7 @@
 import asyncio
 import signal
 import os
-from User1 import User
+from Userclass import User
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
