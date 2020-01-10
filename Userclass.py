@@ -33,8 +33,7 @@ class User:
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
         directoryname = str(self.userId)
         filepath = "GitHub/oreo/Root/Admin" + directoryname
-        p = pathlib.Path(filepath)
-        p.mkdir(parents=True,exist_ok=True)
+        pathlib.Path(filepath).mkdir(parents=True,exist_ok=True)
         #pathlib.Path.join("data", self.userId)
         print("\nRegistered user successfully.")
 
@@ -43,15 +42,10 @@ class User:
     
     def login(self,userId,psw):
 
-        self.islogin = False
-        logindata = pandas.read_csv('root/login.csv')
-        loginuser = pandas.read.csv('root/users.csv')
+        #self.islogin = False
+        logindata = pandas.read_csv('ServerAccessSession/Users.csv')
+        loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
         
-        tmoment = pandas.DataFrame(columns=['username'])
-        tmoment['username'] = [userId]
-        loginuser = loginuser.append(tmoment)
-        loginuser.to_csv('root/users.csv', index=False)
-
 
         if self.islogin:
             print("\nAlready logged in")            
@@ -61,12 +55,21 @@ class User:
             print("\nWrong password!")
         if userId in loginuser['username'].tolist():
             print("\nLogged in from different address")
+
+        self.is_login = True
+        self.username = user
+        self.client_directory = ""
+        tmoment = pandas.DataFrame(columns=['username'])
+        tmoment['username'] = [userId]
+        loginuser = loginuser.append(tmoment)
+        loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
+        
         print("\nLogin completed.")    
 
         
     def logout(self):
 
-        self.loginuser = pandas.read.csv('root/users.csv')
+        loginuser = pandas.read.csv('root/users.csv')
         try:
             if self.userId in loginuser['username'].tolist():
                 usrlist = loginuser['username'].tolist().remove(user)
