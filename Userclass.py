@@ -110,7 +110,7 @@ class User:
     def list(self):
         if not self.islogin:
             return "\nLogin to continue!!"
-        p = int(self.loginusers.loc[self.login_session_data['username'] == username, 'isAdmin'].iloc[0])
+        p = int(self.loginusers.loc[self.loginusers['username'] == self.userId, 'isAdmin'].iloc[0])
         if(p==1):
             path = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId),self.client_directory)
         else:
@@ -129,8 +129,32 @@ class User:
         pass
 
     def write_file(self,path):
-        pass
-
+        if not self.islogin:
+            return "\nLogin to continue!!"
+        p = int(self.loginusers.loc[self.loginusers['username'] == self.userId, 'isAdmin'].iloc[0])
+        if(p==1):
+            path1 = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId),self.client_directory,path)
+        else:
+            path1 = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId),self.client_directory,path)
+        t_file = []
+        for fil in pathlib.Path(path1).iterdir():
+            p = pathlib.Path(path1)/fil
+            if p.is_file:
+                t_file.append(fil)
+        if(path in t_file):
+            with open(path1, "a+") as file:
+                msg = input("user input")
+                file.write(msg)
+            file.close()
+            return"\nSuccess written"
+        with open(t_file, "w+") as file:
+            msg = input("user input")
+            file.write(msg)
+        file.close()
+        return"\nSuccessfully written"
+    
+    
+    
     def create_folder(self,path):
         if not self.islogin:
             return"\nLogin to Continue"
@@ -141,7 +165,7 @@ class User:
             curr_dir = pathlib.Path("/Root/NotAdmin/")
         path1 = pathlib.PurePath(curr_dir).joinpath(str(self.userId),self.client_directory)
         total_avail_dir = []
-        for sub in path1.iterdir():
+        for sub in pathlib.Path(path1).iterdir():
             if (sub.is_dir(pathlib.PurePath.joinpath(path1,sub))):
                 total_avail_dir.append(sub)
         if path in total_avail_dir:
