@@ -118,11 +118,11 @@ class User:
         totaldir = []
         for file_name in path.iterdir():
             totaldir.append([str(file_name),str(file_name.stat().st_size),str(file_name.stat().st_mtime)])
-        response = "\nFile|Size|Modified Date"
+        details = "\nFile|Size|Modified Date"
         for data in totaldir:
-            oneline = " | ".join([data[0],data[1],data[2]]) + "\n"
-            response += "-------\n" + oneline
-        return response
+            line = " | ".join([data[0],data[1],data[2]]) + "\n"
+            details += "-------\n" + line
+        return details
 
 
     def read_file(self,path):
