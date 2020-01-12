@@ -297,6 +297,13 @@ class User():
         return "\n"+"Read file from"+old_inx+" to " + str(int(old_inx)+self.char_count)+"are\n"+data
 
     def write_file(self,path):
+        '''This function is used to write data in the input to the end
+        of the file name in the current working directory for the user
+        issuing the request.
+        --------
+        If no file exists with the given name, a new file is created 
+        in the current working directory for the user.'''
+        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
