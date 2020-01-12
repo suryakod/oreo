@@ -176,7 +176,7 @@ class User():
         then the request is denied.
         '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
+
         if not self.islogin:
             return "\nlogin to continue"
         if int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0]) != 1:
