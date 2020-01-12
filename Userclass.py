@@ -50,8 +50,8 @@ class User():
         self.loginusers : Returns True if the user is logged in 
         ------
         self.loggedusers : Returns a list of users who are already logged in
-        ------
-        """
+        ------'''
+        
         self.path = path
         self._addr = addr
         self.userId = None
@@ -60,7 +60,7 @@ class User():
         self.loggedinusers = None
         self.client_directory = None
         self.rdindex = {}
-        self.char_count = 100'''
+        self.char_count = 100
 
     def rm_tree(self,path1):
         '''This function deals with  '''
@@ -146,7 +146,7 @@ class User():
     def quit(self):
         '''This function is used to 'Sign Out' the user from the current login session.'''
 
-        loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
+        loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         try:
             if self.userId in loginuser['username'].tolist():
                 usrlist = loginuser['username'].tolist().remove(self.userId)
