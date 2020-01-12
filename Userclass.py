@@ -2,7 +2,58 @@ import pathlib
 import pandas
 
 class User():
+     '''Used to create a user 
+    This class involves attributes like 
+    ------
+    self.userId : Returns a string representing the user ID of the user 
+    ------
+    self.islogin : Gives data if the user is logged in or not 
+    ------
+    self.loginusers : Returns True if the user is logged in 
+    ------
+    self.loggedusers : Returns a list of users who are already logged in
+    ===============
+    Methods:
+    This class involves methods like:
+    ------
+    register(): Used to register a new user and enables to create 
+                a username and password of their choice inorder to 
+                login.
+    ------
+    login(): Used to login to the user's account with proper credentials
+    ------
+    quit(): Represents the Log out of the user from the current login session.
+    ------
+    change_folder(): Moves the current working directory for the current user to the
+                    specified folder residing in the current folder
+    ------
+    list(): Prints all files and folders in the current working directory for the 
+            user issuing the request
+    ------
+    read_file(): Read data from the file <name> in the current working directory for 
+                the user issuing the request and return the first hundred characters in it.
+    ------
+    write_file(): Write the data in <input> to the end of the file <name> in the current 
+                working directory for the user issuing the request, starting on a new line.   
+    ------
+    create_folder(): Create a new folder with the specified <name> in the current working 
+                    directory for the user issuing the request. '''
+
+
     def __init__(self,path,addr):
+        ''' The parameters are passed to the __init__ function 
+        The Parameters include :
+        ------
+        self.userId : Returns a string representing the user ID of the user 
+        ------
+        self.islogin : Gives data if the user is logged in or not 
+        ------
+        self.loginusers : Returns True if the user is logged in 
+        ------
+        self.loggedusers : Returns a list of users who are already logged in
+        ------
+        '''
+        
         self.path = path
         self._addr = addr
         self.userId = None
@@ -13,30 +64,11 @@ class User():
         self.rdindex = {}
         self.char_count = 100
 
-    def session(self):
-        self.createdusers = pd.read_csv("ServerAccessSession/Users.csv")
-        self.loggedinusers = pd.read_csv("ServerAccessSession/logged_in_Users.csv")
-
-    def commands(self):
-        commands = ["commands :: View all commands available for the client\n",
-                    "login <username> <password> :: Log in with username and password\n",
-                    "register <username> <password> <privileges> :: Register with the username, password and privileges.\n",
-                    "list :: Get all list of directory details.\n",
-                    "change_folder <path> :: Change directory to specified path or file\n",
-                    "read_file <path> :: Print 100 characters from file path specified.\n",
-                    "write_file <path>:: Write data in input function in the function to end of file path in current directory\n",
-                    "create_folder <path> :: Create a new folder with file path in current directory\n",
-                    "delete <username> <password> :: Delete the user with username from server and  Access available only for admins.\n",
-                    "quit :: Logout and quit"
-                    ]
-        comd = ""
-        for i in range(0,len(commands)):
-            line = "".join(commands[i])
-            comd += line+"------------\n"
-        return comd
-
 
     def rm_tree(self,path1):
+        ''' This function is used for removing the tree and for removing
+        the current directory and its contents'''
+        
         for child in path1.iterdir():
             if child.is_file():
                 child.unlink()
@@ -44,7 +76,17 @@ class User():
                 self.rm_tree(child)
         path1.rmdir()
 
+
     def register(self,userId,psw,privilege):
+        '''This function is used to create a new user with the privileges
+        to the server using the username and password provided.
+        --------
+        The privileges are either User or Admin.
+        --------
+        If a username already exists, it displays that the username is not 
+        available. 
+        --------
+        If no username is entered, it diplays that empty user cannot be registered.'''
        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
@@ -71,8 +113,18 @@ class User():
 
    
     def login(self,userId,psw):
+        '''This function is used to login the user, when respective credentials
+        are provided by the user.
+        --------
+        When the username and password provided by the user matches the previous 
+        register data, then the user is allowed to login.
+        --------
+        Displays "Username not registered" when the credentials provided doesnot 
+        match the previous register data.
+        --------
+        Displays "Wrong password", if the entered password does not match the registered 
+        username.'''
 
-        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         
@@ -97,6 +149,7 @@ class User():
 
         
     def quit(self):
+        '''This function is used to 'Sign Out' the user from the current login session.'''
 
         loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
         try:
@@ -115,6 +168,14 @@ class User():
 
 
     def delete(self,userId,pws):
+        '''This function is used to delete a user's account.
+        -------
+        NOTE: This service is *only* available to the users with a privilege
+        level of ADMIN.
+        -------
+        If the request is done by a user that does not have admin privileges, 
+        then the request is denied.
+        '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
         if not self.islogin:
@@ -147,7 +208,14 @@ class User():
         self.rm_tree(path)
         return"\nDeleted" + userId + "successfully"
 
+
     def change_folder(self,directory):
+        '''This function is used to move the current directory for 
+        the current user to the specified folde residing in the current folder.
+        -------
+        When the user is provided a username ans password to login, if the name
+        does not point to a folder in the current directory, the request is denied.'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         
         if not self.islogin:
@@ -167,6 +235,15 @@ class User():
 
         
     def list(self):
+        '''This function gives nformation about the name, size, date and 
+        time of creation of the request.
+        -------
+        It also prints all files and folders in the current working directory
+        for issuing the request.
+        -------
+        It pnly has access to the current directory and can not print
+        the information regarding content in sub- directories.'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -186,6 +263,18 @@ class User():
 
 
     def read_file(self,path):
+        '''This function is used to read data from the current 
+        working directory for the ser issuing the request.
+        -------
+        If a file with specified name does not exist in the current 
+        working directory for the user, the request is denied.
+        -------
+        It closes the currently opened from the file from reading 
+        when service without a name variable is requested.
+        -------
+        SUbsequent calls with the file as name will start from the 
+        beginning of the file.'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to Continue"
@@ -214,7 +303,15 @@ class User():
         self.rdindex[t_path] %= len(cont)//self.char_count+1
         return "\n"+"Read file from"+old_inx+" to " + str(int(old_inx)+self.char_count)+"are\n"+data
 
+
     def write_file(self,path):
+        '''This function is used to write data in the input to the end
+        of the file name in the current working directory for the user
+        issuing the request.
+        --------
+        If no file exists with the given name, a new file is created 
+        in the current working directory for the user.'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -241,8 +338,14 @@ class User():
         return"\nSuccessfully written"
     
     
-    
     def create_folder(self,path):
+        '''This function is used to create a new folder with 
+        specified name in the current working directory for the user
+        issuing the request.
+        --------
+        If a folder with the given name already exists, then it 
+        displays "This directory is already created".'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return"\nLogin to Continue"
