@@ -49,7 +49,7 @@ class User():
 
         
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
+        loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         
         if self.islogin:
             print("\nAlready logged in")            
