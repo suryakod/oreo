@@ -40,7 +40,7 @@ class User():
                     directory for the user issuing the request. """
 
     def __init__(self,path,addr):
-        ''' The parameters are passed to the __init__ function 
+        """The parameters are passed to the __init__ function 
         The Parameters include :
         ------
         self.userId : Returns a string representing the user ID of the user 
@@ -60,7 +60,11 @@ class User():
         self.loggedinusers = None
         self.client_directory = None
         self.rdindex = {}
-        self.char_count = 100'''
+        self.char_count = 100
+
+    def session(self):
+        self.createdusers = pandas.read_csv("ServerAccessSession/Users.csv")
+        self.loggedinusers = pandas.read_csv("ServerAccessSession/logged_in_Users.csv")
 
     def rm_tree(self,path1):
         '''This function deals with  '''
