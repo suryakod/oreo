@@ -7,9 +7,34 @@ class User():
         self._addr = addr
         self.userId = None
         self.islogin = False
+        self.createdusers = None
+        self.loggedinusers = None
         self.client_directory = None
         self.rdindex = {}
         self.char_count = 100
+
+    def session(self):
+        self.createdusers = pd.read_csv("ServerAccessSession/Users.csv")
+        self.loggedinusers = pd.read_csv("ServerAccessSession/logged_in_Users.csv")
+
+    def commands(self):
+        commands = ["commands :: View all commands available for the client\n",
+                    "login <username> <password> :: Log in with username and password\n",
+                    "register <username> <password> <privileges> :: Register with the username, password and privileges.\n",
+                    "list :: Get all list of directory details.\n",
+                    "change_folder <path> :: Change directory to specified path or file\n",
+                    "read_file <path> :: Print 100 characters from file path specified.\n",
+                    "write_file <path>:: Write data in input function in the function to end of file path in current directory\n",
+                    "create_folder <path> :: Create a new folder with file path in current directory\n",
+                    "delete <username> <password> :: Delete the user with username from server and  Access available only for admins.\n",
+                    "quit :: Logout and quit"
+                    ]
+        comd = ""
+        for i in range(0,len(commands)):
+            line = "".join(commands[i])
+            comd += line+"------------\n"
+        return comd
+
 
     def rm_tree(self,path1):
         for child in path1.iterdir():
@@ -91,7 +116,6 @@ class User():
 
     def delete(self,userId,pws):
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
 
         if not self.islogin:
             return "\nlogin to continue"
