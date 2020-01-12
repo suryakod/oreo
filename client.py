@@ -1,3 +1,15 @@
+'''
+This file is the client program using async I/O 
+--------
+The connection is made with the server using local host
+--------
+After the connection has been established the 
+user commands are executed as per the Userclass
+--------
+The connection is closed based on the user request 
+'''
+
+
 import asyncio
 
 
