@@ -236,7 +236,7 @@ class User():
         -------
         It pnly has access to the current directory and can not print
         the information regarding content in sub- directories.'''
-        
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -256,6 +256,18 @@ class User():
 
 
     def read_file(self,path):
+        '''This function is used to read data from the current 
+        working directory for the ser issuing the request.
+        -------
+        If a file with specified name does not exist in the current 
+        working directory for the user, the request is denied.
+        -------
+        It closes the currently opened from the file from reading 
+        when service without a name variable is requested.
+        -------
+        SUbsequent calls with the file as name will start from the 
+        beginning of the file.'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to Continue"
