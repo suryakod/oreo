@@ -2,7 +2,57 @@ import pathlib
 import pandas
 
 class User():
+     '''Used to create a user 
+    This class involves attributes like 
+    ------
+    self.userId : Returns a string representing the user ID of the user 
+    ------
+    self.islogin : Gives data if the user is logged in or not 
+    ------
+    self.loginusers : Returns True if the user is logged in 
+    ------
+    self.loggedusers : Returns a list of users who are already logged in
+    ===============
+    Methods:
+    This class involves methods like:
+    ------
+    register(): Used to register a new user and enables to create 
+                a username and password of their choice inorder to 
+                login.
+    ------
+    login(): Used to login to the user's account with proper credentials
+    ------
+    quit(): Represents the Log out of the user from the current login session.
+    ------
+    change_folder(): Moves the current working directory for the current user to the
+                    specified folder residing in the current folder
+    ------
+    list(): Prints all files and folders in the current working directory for the 
+            user issuing the request
+    ------
+    read_file(): Read data from the file <name> in the current working directory for 
+                the user issuing the request and return the first hundred characters in it.
+    ------
+    write_file(): Write the data in <input> to the end of the file <name> in the current 
+                working directory for the user issuing the request, starting on a new line.   
+    ------
+    create_folder(): Create a new folder with the specified <name> in the current working 
+                    directory for the user issuing the request. '''
+
     def __init__(self,path,addr):
+                ''' The parameters are passed to the __init__ function 
+        The Parameters include :
+        ------
+        self.userId : Returns a string representing the user ID of the user 
+        ------
+        self.islogin : Gives data if the user is logged in or not 
+        ------
+        self.loginusers : Returns True if the user is logged in 
+        ------
+        self.loggedusers : Returns a list of users who are already logged in
+        ------
+        '''
+        
         self.path = path
         self._addr = addr
         self.userId = None
@@ -20,6 +70,12 @@ class User():
         path1.rmdir()
 
     def register(self,userId,psw,privilege):
+        '''This function is used to create a new user with the privileges
+        to the server using the username and password provided.
+        The privileges are either User or Admin.
+        If a username already exists, it displays that the username is not 
+        available. 
+        If no username is entered, it diplays that empty user cannot be registered.'''
        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
