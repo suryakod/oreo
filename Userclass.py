@@ -298,6 +298,16 @@ class User():
         return "\n"+"Read file from"+old_inx+" to " + str(int(old_inx)+self.char_count)+"are\n"+data
 
     def write_file(self,path):
+        ''' 
+        This function appends data to the file in the diectotry 
+        as per the command given
+        --------
+        The file will be written with the data of the user input
+        --------
+        If data already exists in the file in the directory,
+        the new data will be appended to the existing data 
+        without any data loss.
+        '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -326,6 +336,7 @@ class User():
     
     
     def create_folder(self,path):
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return"\nLogin to Continue"
