@@ -142,6 +142,7 @@ class User():
 
         
     def quit(self):
+        '''This function is used to 'Sign Out' the user from the current login session.'''
 
         loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
         try:
@@ -160,6 +161,7 @@ class User():
 
 
     def delete(self,userId,pws):
+        ''' '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
 
