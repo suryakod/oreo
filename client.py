@@ -3,7 +3,7 @@ import asyncio
 
 async def tcp_echo_client():
     reader, writer = await asyncio.open_connection(
-        '127.0.0.1', 8888)
+        '127.0.0.1', 8080)
     message = ''
     while True:
         message = input('Enter command ::\n')
@@ -13,7 +13,7 @@ async def tcp_echo_client():
 
         writer.write(message.encode())
         data = await reader.read(100)
-        print(f'Received: {data.decode()}',"utf-8")
+        print(f'Received: {data.decode()}',)
         if message.lower() == "quit":
             break
     print('Close the connection')

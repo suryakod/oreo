@@ -5,7 +5,7 @@ from Userclass import User
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-"""def clientRequest(usr, message):
+def clientRequest(usr, message):
     usr.session()
     if str(usr.userId) not in usr.createdusers['username'].tolist():
         usr.quit()
@@ -46,7 +46,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
         if len(message.split(" ")) == 2:
             return usr.delete(message.split(" ")[1])
         return "Enter correct command"  
-    return "Enter the correct command """
+    return "Enter the correct command "
         
 
 
@@ -74,7 +74,7 @@ async def handle_echo(reader, writer):
 
 async def main():
     server = await asyncio.start_server(
-        handle_echo, '127.0.0.1', 8888)
+        handle_echo, '127.0.0.1', 8080)
 
 
     addr = server.sockets[0].getsockname()
