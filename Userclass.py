@@ -161,7 +161,14 @@ class User():
 
 
     def delete(self,userId,pws):
-        ''' '''
+        '''This function is used to delete a user's account.
+        -------
+        NOTE: This service is *only* available to the users with a privilege
+        level of ADMIN.
+        -------
+        If the request is done by a user that does not have admin privileges, 
+        then the request is denied.
+        '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
 
