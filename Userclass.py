@@ -1,7 +1,7 @@
 import pathlib
 import pandas
 
-class User:
+class User():
     def __init__(self,path,addr):
         self.path = path
         self._addr = addr
@@ -11,13 +11,13 @@ class User:
         self.rdindex = {}
         self.char_count = 100
 
-    def rm_tree(pth: Path):
-        for child in pth.iterdir():
+    def rm_tree(self,path1):
+        for child in path1.iterdir():
             if child.is_file():
                 child.unlink()
             else:
-                rm_tree(child)
-        pth.rmdir()
+                self.rm_tree(child)
+        path1.rmdir()
 
     def register(self,userId,psw,privilege):
        
@@ -42,17 +42,15 @@ class User:
         else:
             filepath = pathlib.Path("GitHub/oreo/Root/NotAdmin/")/directoryname
         pathlib.Path(filepath).mkdir(parents=True,exist_ok=True)
-        #pathlib.Path.join("data", self.userId)
         print("\nRegistered user successfully.")
 
    
     def login(self,userId,psw):
 
-        #self.islogin = False
+        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read.csv('ServerAccessSession/logged_in_Users.csv')
         
-
         if self.islogin:
             print("\nAlready logged in")            
         if userId not in logindata['username'].tolist():
@@ -97,11 +95,11 @@ class User:
 
         if not self.islogin:
             return "\nlogin to continue"
-        if int(self.loginusers.loc[loginuser['username'] == self.userId, 'isAdmin'].iloc[0]) != 1:
+        if int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0]) != 1:
             return "\n you should be admin."
-        if userId not in loginuser['username'].tolist():
+        if userId not in logindata['username'].tolist():
             return "\nNo user with username "+ userId + "found"
-        if password != str(logindata.loc[logindata['username']==userId,'password'].iloc[0]):
+        if pws != str(logindata.loc[logindata['username']==userId,'password'].iloc[0]):
             return "\nEnter correct password"
         dataf = pandas.DataFrame(columns=['username','password','isAdmin'])
         for us,psw,priv in zip(logindata['username'].tolist(),logindata['password'].tolist(),logindata['isAdmin'].tolist()):
@@ -111,12 +109,12 @@ class User:
                 dataf_1['password'] = psw
                 dataf_1['isAdmin'] = priv
                 dataf = dataf.append(dataf_1)
-            dataf.to_csv("ServerAccessSession/Users.csv", index = False)
-            logindata = pandas.read_csv('ServerAccessSession/Users.csv')
+        dataf.to_csv("ServerAccessSession/Users.csv", index = False)
+        logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
-        if self.userId = userId:
+        if self.userId == userId:
             self.quit()
-        n = int(self.loginusers.loc[loginuser['username'] == self.userId, 'isAdmin'].iloc[0])
+        n = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
         if (n==1):
             path = pathlib.Path("/Root/Admin/")
         else:
@@ -130,7 +128,7 @@ class User:
         
         if not self.islogin:
             return "\nLogin to continue"
-        n = int(self.logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        n = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
         if (n==1):
             path = pathlib.Path("/Root/Admin/")
         else:
@@ -148,7 +146,7 @@ class User:
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
-        p = int(self.logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
         if(p==1):
             path = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId),self.client_directory)
         else:
@@ -167,7 +165,7 @@ class User:
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to Continue"
-        p = int(self.logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
         if(p==1):
             path_d = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId),self.client_directory)
         else:
