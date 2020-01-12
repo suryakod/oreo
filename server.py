@@ -8,7 +8,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 def clientRequest(usr, message):
     usr.session()
     if str(usr.userId) not in usr.createdusers['username'].tolist():
-        usr.quit()
+        return usr.quit()
     message = message.rstrip("\n").rstrip(" ").lstrip(" ")
     if message.split(" ")[0] == "commands":
         return usr.commands()

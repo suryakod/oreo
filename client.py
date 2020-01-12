@@ -3,7 +3,7 @@ import asyncio
 
 async def tcp_echo_client():
     reader, writer = await asyncio.open_connection(
-        '127.0.0.1', 10000)
+        '127.0.0.1', 8080)
     message = ''
     while True:
         message = input('Enter command ::\n')
