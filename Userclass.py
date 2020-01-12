@@ -39,9 +39,8 @@ class User():
     create_folder(): Create a new folder with the specified <name> in the current working 
                     directory for the user issuing the request. """
 
-
     def __init__(self,path,addr):
-        """The parameters are passed to the __init__ function 
+        ''' The parameters are passed to the __init__ function 
         The Parameters include :
         ------
         self.userId : Returns a string representing the user ID of the user 
@@ -61,19 +60,16 @@ class User():
         self.loggedinusers = None
         self.client_directory = None
         self.rdindex = {}
-        self.char_count = 100
+        self.char_count = 100'''
 
     def rm_tree(self,path1):
-        ''' This function is used for removing the tree and for removing
-        the current directory and its contents'''
-        
+        '''This function deals with  '''
         for child in path1.iterdir():
             if child.is_file():
                 child.unlink()
             else:
                 self.rm_tree(child)
         path1.rmdir()
-
 
     def register(self,userId,psw,privilege):
         '''This function is used to create a new user with the privileges
@@ -123,6 +119,7 @@ class User():
         Displays "Wrong password", if the entered password does not match the registered 
         username.'''
 
+        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         
@@ -205,7 +202,6 @@ class User():
         path = path/str(self.userId)
         self.rm_tree(path)
         return"\nDeleted" + userId + "successfully"
-
 
     def change_folder(self,directory):
         '''This function is used to move the current directory for 
@@ -301,15 +297,17 @@ class User():
         self.rdindex[t_path] %= len(cont)//self.char_count+1
         return "\n"+"Read file from"+old_inx+" to " + str(int(old_inx)+self.char_count)+"are\n"+data
 
-
     def write_file(self,path):
-        '''This function is used to write data in the input to the end
-        of the file name in the current working directory for the user
-        issuing the request.
+        ''' 
+        This function appends data to the file in the diectotry 
+        as per the command given
         --------
-        If no file exists with the given name, a new file is created 
-        in the current working directory for the user.'''
-
+        The file will be written with the data of the user input
+        --------
+        If data already exists in the file in the directory,
+        the new data will be appended to the existing data 
+        without any data loss.
+        '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -336,14 +334,16 @@ class User():
         return"\nSuccessfully written"
     
     
+    
     def create_folder(self,path):
-        '''This function is used to create a new folder with 
-        specified name in the current working directory for the user
-        issuing the request.
+        '''
+        This function creates new directory as per the user command
         --------
-        If a folder with the given name already exists, then it 
-        displays "This directory is already created".'''
-
+        The function checks the existing directories before creating 
+        new ones to avoid duplication.
+        ---------
+        The root path will be changed based on the privilge of user
+        '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return"\nLogin to Continue"
