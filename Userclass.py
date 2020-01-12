@@ -72,9 +72,12 @@ class User():
     def register(self,userId,psw,privilege):
         '''This function is used to create a new user with the privileges
         to the server using the username and password provided.
+        --------
         The privileges are either User or Admin.
+        --------
         If a username already exists, it displays that the username is not 
         available. 
+        --------
         If no username is entered, it diplays that empty user cannot be registered.'''
        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
@@ -102,6 +105,17 @@ class User():
 
    
     def login(self,userId,psw):
+        '''This function is used to login the user, when respective credentials
+        are provided by the user.
+        --------
+        When the username and password provided by the user matches the previous 
+        register data, then the user is allowed to login.
+        --------
+        Displays "Username not registered" when the credentials provided doesnot 
+        match the previous register data.
+        --------
+        Displays "Wrong password", if the entered password does not match the registered 
+        username.'''
 
         
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
