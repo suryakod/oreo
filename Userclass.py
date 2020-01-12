@@ -203,6 +203,12 @@ class User():
         return"\nDeleted" + userId + "successfully"
 
     def change_folder(self,directory):
+        '''This function is used to move the current directory for 
+        the current user to the specified folde residing in the current folder.
+        -------
+        When the user is provided a username ans password to login, if the name
+        does not point to a folder in the current directory, the request is denied.'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         
         if not self.islogin:
@@ -222,6 +228,15 @@ class User():
 
         
     def list(self):
+        '''This function gives nformation about the name, size, date and 
+        time of creation of the request.
+        -------
+        It also prints all files and folders in the current working directory
+        for issuing the request.
+        -------
+        It pnly has access to the current directory and can not print
+        the information regarding content in sub- directories.'''
+        
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
