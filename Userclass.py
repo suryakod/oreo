@@ -336,7 +336,14 @@ class User():
     
     
     def create_folder(self,path):
-
+        '''
+        This function creates new directory as per the user command
+        --------
+        The function checks the existing directories before creating 
+        new ones to avoid duplication.
+        ---------
+        The root path will be changed based on the privilge of user
+        '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return"\nLogin to Continue"
