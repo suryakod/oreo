@@ -2,7 +2,7 @@ import pathlib
 import pandas
 
 class User():
-     '''Used to create a user 
+    """Used to create a user 
     This class involves attributes like 
     ------
     self.userId : Returns a string representing the user ID of the user 
@@ -37,10 +37,10 @@ class User():
                 working directory for the user issuing the request, starting on a new line.   
     ------
     create_folder(): Create a new folder with the specified <name> in the current working 
-                    directory for the user issuing the request. '''
+                    directory for the user issuing the request. """
 
     def __init__(self,path,addr):
-                ''' The parameters are passed to the __init__ function 
+        ''' The parameters are passed to the __init__ function 
         The Parameters include :
         ------
         self.userId : Returns a string representing the user ID of the user 
@@ -51,15 +51,16 @@ class User():
         ------
         self.loggedusers : Returns a list of users who are already logged in
         ------
-        '''
-        
+        """
         self.path = path
         self._addr = addr
         self.userId = None
         self.islogin = False
+        self.createdusers = None
+        self.loggedinusers = None
         self.client_directory = None
         self.rdindex = {}
-        self.char_count = 100
+        self.char_count = 100'''
 
     def rm_tree(self,path1):
         '''This function deals with  '''
@@ -171,7 +172,6 @@ class User():
         then the request is denied.
         '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
 
         if not self.islogin:
             return "\nlogin to continue"
