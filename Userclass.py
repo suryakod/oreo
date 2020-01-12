@@ -303,7 +303,7 @@ class User():
         --------
         If no file exists with the given name, a new file is created 
         in the current working directory for the user.'''
-        
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -332,6 +332,13 @@ class User():
     
     
     def create_folder(self,path):
+        '''This function is used to create a new folder with 
+        specified name in the current working directory for the user
+        issuing the request.
+        --------
+        If a folder with the given name already exists, then it 
+        displays "This directory is already created".'''
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return"\nLogin to Continue"
