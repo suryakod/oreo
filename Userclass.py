@@ -3,21 +3,21 @@ import pandas
 
 class User():
     """Used to create a user 
-    This class involves attributes like 
+    This class involves attributes like
     ------
-    self.userId : Returns a string representing the user ID of the user 
+    self.userId : Returns a string representing the user ID of the user
     ------
-    self.islogin : Gives data if the user is logged in or not 
+    self.islogin : Gives data if the user is logged in or not
     ------
-    self.loginusers : Returns True if the user is logged in 
+    self.loginusers : Returns True if the user is logged in
     ------
     self.loggedusers : Returns a list of users who are already logged in
     ===============
     Methods:
     This class involves methods like:
     ------
-    register(): Used to register a new user and enables to create 
-                a username and password of their choice inorder to 
+    register(): Used to register a new user and enables to create
+                a username and password of their choice inorder to
                 login.
     ------
     login(): Used to login to the user's account with proper credentials
@@ -27,27 +27,27 @@ class User():
     change_folder(): Moves the current working directory for the current user to the
                     specified folder residing in the current folder
     ------
-    list(): Prints all files and folders in the current working directory for the 
+    list(): Prints all files and folders in the current working directory for the
             user issuing the request
     ------
-    read_file(): Read data from the file <name> in the current working directory for 
+    read_file(): Read data from the file <name> in the current working directory for
                 the user issuing the request and return the first hundred characters in it.
     ------
-    write_file(): Write the data in <input> to the end of the file <name> in the current 
-                working directory for the user issuing the request, starting on a new line.   
+    write_file(): Write the data in <input> to the end of the file <name> in the current
+                working directory for the user issuing the request, starting on a new line.
     ------
-    create_folder(): Create a new folder with the specified <name> in the current working 
+    create_folder(): Create a new folder with the specified <name> in the current working
                     directory for the user issuing the request. """
 
     def __init__(self, path, addr):
-        '''The parameters are passed to the __init__ function 
+        '''The parameters are passed to the __init__ function
         The Parameters include :
         ------
-        self.userId : Returns a string representing the user ID of the user 
+        self.userId : Returns a string representing the user ID of the user
         ------
-        self.islogin : Gives data if the user is logged in or not 
+        self.islogin : Gives data if the user is logged in or not
         ------
-        self.loginusers : Returns True if the user is logged in 
+        self.loginusers : Returns True if the user is logged in
         ------
         self.loggedusers : Returns a list of users who are already logged in
         ------'''
@@ -81,8 +81,8 @@ class User():
         --------
         The privileges are either User or Admin.
         --------
-        If a username already exists, it displays that the username is not 
-        available. 
+        If a username already exists, it displays that the username is not
+        available.
         --------
         If no username is entered, it diplays that empty user cannot be registered.'''
        
@@ -114,13 +114,13 @@ class User():
         '''This function is used to login the user, when respective credentials
         are provided by the user.
         --------
-        When the username and password provided by the user matches the previous 
+        When the username and password provided by the user matches the previous
         register data, then the user is allowed to login.
         --------
         Displays "Username not registered" when the credentials provided doesnot 
         match the previous register data.
         --------
-        Displays "Wrong password", if the entered password does not match the registered 
+        Displays "Wrong password", if the entered password does not match the registered
         username.'''
 
         
@@ -128,7 +128,7 @@ class User():
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         
         if self.islogin:
-            print("\nAlready logged in")            
+            print("\nAlready logged in")
         if userId not in logindata['username'].tolist():
             print("\nUsername not registered")
         if psw != logindata.loc[logindata['username'] == userId, 'password'].iloc[0]:
@@ -144,7 +144,7 @@ class User():
         loginuser = loginuser.append(tmoment)
         loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
         
-        print("\nLogin completed.")    
+        print("\nLogin completed.")
 
         
     def quit(self):
@@ -165,14 +165,13 @@ class User():
             print("\nSigned out")
 
 
-
     def delete(self, userId, pws):
         '''This function is used to delete a user's account.
         -------
         NOTE: This service is *only* available to the users with a privilege
         level of ADMIN.
         -------
-        If the request is done by a user that does not have admin privileges, 
+        If the request is done by a user that does not have admin privileges,
         then the request is denied.
         '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
@@ -208,7 +207,7 @@ class User():
         return"\nDeleted" + userId + "successfully"
 
     def change_folder(self, directory):
-        '''This function is used to move the current directory for 
+        '''This function is used to move the current directory for
         the current user to the specified folde residing in the current folder.
         -------
         When the user is provided a username ans password to login, if the name
@@ -233,7 +232,7 @@ class User():
 
         
     def list(self):
-        '''This function gives nformation about the name, size, date and 
+        '''This function gives nformation about the name, size, date and
         time of creation of the request.
         -------
         It also prints all files and folders in the current working directory
@@ -261,16 +260,16 @@ class User():
 
 
     def read_file(self, path):
-        '''This function is used to read data from the current 
+        '''This function is used to read data from the current
         working directory for the ser issuing the request.
         -------
-        If a file with specified name does not exist in the current 
+        If a file with specified name does not exist in the current
         working directory for the user, the request is denied.
         -------
-        It closes the currently opened from the file from reading 
+        It closes the currently opened from the file from reading
         when service without a name variable is requested.
         -------
-        SUbsequent calls with the file as name will start from the 
+        SUbsequent calls with the file as name will start from the
         beginning of the file.'''
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
@@ -302,14 +301,14 @@ class User():
         return "\n"+"Read file from"+old_inx+" to " + str(int(old_inx)+self.char_count)+"are\n"+data
 
     def write_file(self, path):
-        ''' 
-        This function appends data to the file in the diectotry 
+        '''
+        This function appends data to the file in the diectotry
         as per the command given
         --------
         The file will be written with the data of the user input
         --------
         If data already exists in the file in the directory,
-        the new data will be appended to the existing data 
+        the new data will be appended to the existing data
         without any data loss.
         '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
@@ -342,7 +341,7 @@ class User():
         '''
         This function creates new directory as per the user command
         --------
-        The function checks the existing directories before creating 
+        The function checks the existing directories before creating
         new ones to avoid duplication.
         ---------
         The root path will be changed based on the privilge of user
