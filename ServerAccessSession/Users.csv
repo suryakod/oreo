@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 isAdmin,password,username
 1.0,1234,test
+=======
+username,password,isAdmin
+charan,123456,1
+>>>>>>> a4d05b2bdd16a517c905fbe7469c5c083fab60fd
