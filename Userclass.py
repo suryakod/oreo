@@ -9,7 +9,7 @@ class User():
     """Used to create a user
     This class involves attributes like
     ------
-    self.userId : Returns a string representing the user ID of the user
+    self.user_Id : Returns a string representing the user ID of the user
     ------
     self.islogin : Gives data if the user is logged in or not
     ------
@@ -47,7 +47,7 @@ class User():
         '''The parameters are passed to the __init__ function
         The Parameters include :
         ------
-        self.userId : Returns a string representing the user ID of the user
+        self.user_Id : Returns a string representing the user ID of the user
         ------
         self.islogin : Gives data if the user is logged in or not
         ------
@@ -58,7 +58,7 @@ class User():
 
         self.path = path
         self._addr = addr
-        self.userId = None
+        self.user_Id = None
         self.islogin = False
         self.createdusers = None
         self.loggedinusers = None
@@ -67,6 +67,9 @@ class User():
         self.char_count = 100
 
     def session(self):
+        '''
+        This function deals with accessing of user login information
+        '''
         self.createdusers = pandas.read_csv("ServerAccessSession/Users.csv")
         self.loggedinusers = pandas.read_csv("ServerAccessSession/logged_in_Users.csv")
 
@@ -79,7 +82,7 @@ class User():
                 self.rm_tree(child)
         path1.rmdir()
 
-    def register(self, userId, psw, privilege):
+    def register(self, user_Id, psw, privilege):
         '''This function is used to create a new user with the privileges
         to the server using the username and password provided.
         --------
@@ -92,12 +95,12 @@ class User():
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
-        if userId in logindata['username'].tolist():
+        if user_Id in logindata['username'].tolist():
             print("\nUsername not available")
-        if userId == "" or psw == "" or privilege == "":
+        if user_Id == "" or psw == "" or privilege == "":
             print("\nYou cannot register empty user")
         moment = pandas.DataFrame(columns=['username'])
-        moment['username'] = [userId]
+        moment['username'] = [user_Id]
         moment['password'] = psw
         if privilege.lower() == 'admin':
             moment['isAdmin'] = 1
@@ -105,7 +108,7 @@ class User():
             moment['isAdmin'] = 0
         logindata = logindata.append(moment)
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
-        directoryname = str(self.userId)
+        directoryname = str(self.user_Id)
         if moment['isAdmin'] == 1:
             filepath = pathlib.Path("GitHub/oreo/Root/Admin/")/directoryname
         else:
@@ -114,7 +117,7 @@ class User():
         print("\nRegistered user successfully.")
 
 
-    def login(self, userId, psw):
+    def login(self, user_Id, psw):
         '''This function is used to login the user, when respective credentials
         are provided by the user.
         --------
@@ -133,18 +136,18 @@ class User():
 
         if self.islogin:
             print("\nAlready logged in")
-        if userId not in logindata['username'].tolist():
+        if user_Id not in logindata['username'].tolist():
             print("\nUsername not registered")
-        if psw != logindata.loc[logindata['username'] == userId, 'password'].iloc[0]:
+        if psw != logindata.loc[logindata['username'] == user_Id, 'password'].iloc[0]:
             print("\nWrong password!")
-        if userId in loginuser['username'].tolist():
+        if user_Id in loginuser['username'].tolist():
             print("\nLogged in from different address")
 
         self.is_login = True
-        self.username = userId
+        self.username = user_Id
         self.client_directory = ""
         tmoment = pandas.DataFrame(columns=['username'])
-        tmoment['username'] = [userId]
+        tmoment['username'] = [user_Id]
         loginuser = loginuser.append(tmoment)
         loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
 
@@ -156,11 +159,11 @@ class User():
 
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         try:
-            if self.userId in loginuser['username'].tolist():
-                usrlist = loginuser['username'].tolist().remove(self.userId)
+            if self.user_Id in loginuser['username'].tolist():
+                usrlist = loginuser['username'].tolist().remove(self.user_Id)
                 loginuser['username'] = usrlist
                 loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
-            self.userId = None
+            self.user_Id = None
             self.client_directory = ""
             self.islogin = False
             self.rdindex = {}
@@ -169,7 +172,7 @@ class User():
             print("\nSigned out")
 
 
-    def delete(self, userId, pws):
+    def delete(self, user_Id, pws):
         '''This function is used to delete a user's account.
         -------
         NOTE: This service is *only* available to the users with a privilege
@@ -182,33 +185,33 @@ class User():
 
         if not self.islogin:
             return "\nlogin to continue"
-        if int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0]) != 1:
+        if int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0]) != 1:
             return "\n you should be admin."
-        if userId not in logindata['username'].tolist():
-            return "\nNo user with username "+ userId + "found"
-        if pws != str(logindata.loc[logindata['username'] == userId, 'password'].iloc[0]):
+        if user_Id not in logindata['username'].tolist():
+            return "\nNo user with username "+ user_Id + "found"
+        if pws != str(logindata.loc[logindata['username'] == user_Id, 'password'].iloc[0]):
             return "\nEnter correct password"
         dataf = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
         for us, psw, priv in zip(logindata['username'].tolist(), logindata['password'].tolist(), logindata['isAdmin'].tolist()):
-            if us != userId:
+            if us != user_Id:
                 dataf_1 = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
-                dataf_1['username'] = [userId]
+                dataf_1['username'] = [user_Id]
                 dataf_1['password'] = psw
                 dataf_1['isAdmin'] = priv
                 dataf = dataf.append(dataf_1)
         dataf.to_csv("ServerAccessSession/Users.csv", index = False)
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
-        if self.userId == userId:
+        if self.user_Id == user_Id:
             self.quit()
-        n = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        n = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if (n == 1):
             path = pathlib.Path("/Root/Admin/")
         else:
             path = pathlib.Path("/Root/NotAdmin/")
-        path = path/str(self.userId)
+        path = path/str(self.user_Id)
         self.rm_tree(path)
-        return"\nDeleted" + userId + "successfully"
+        return"\nDeleted" + user_Id + "successfully"
 
     def change_folder(self, directory):
         '''This function is used to move the current directory for
@@ -221,12 +224,12 @@ class User():
 
         if not self.islogin:
             return "\nLogin to continue"
-        n = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        n = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if (n == 1):
             path = pathlib.Path("/Root/Admin/")
         else:
             path = pathlib.Path("/Root/NotAdmin/")
-        path = path/str(self.userId)
+        path = path/str(self.user_Id)
         totaldir = [e for e in path.iterdir() if e.is_dir()]
         path_change = pathlib.PurePath(path).joinpath(self.client_directory, directory)
         if path_change in totaldir:
@@ -248,11 +251,11 @@ class User():
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
-        p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        p = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if p == 1:
-            path = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId), self.client_directory)
+            path = pathlib.PurePath("/Root/Admin/").joinpath(str(self.user_Id), self.client_directory)
         else:
-            path = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId), self.client_directory)
+            path = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.user_Id), self.client_directory)
         totaldir = []
         for file_name in path.iterdir():
             totaldir.append([str(file_name), str(file_name.stat().st_size), str(file_name.stat().st_mtime)])
@@ -279,11 +282,11 @@ class User():
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to Continue"
-        p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        p = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if p == 1:
-            path_d = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId), self.client_directory)
+            path_d = pathlib.PurePath("/Root/Admin/").joinpath(str(self.user_Id), self.client_directory)
         else:
-            path_d = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId), self.client_directory)
+            path_d = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.user_Id), self.client_directory)
 
         files = []
         for f in pathlib.Path(path_d).iterdir():
@@ -318,11 +321,11 @@ class User():
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
-        p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        p = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if p == 1:
-            path1 = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId), self.client_directory, path)
+            path1 = pathlib.PurePath("/Root/Admin/").joinpath(str(self.user_Id), self.client_directory, path)
         else:
-            path1 = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId), self.client_directory, path)
+            path1 = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.user_Id), self.client_directory, path)
         t_file = []
         for fil in pathlib.Path(path1).iterdir():
             p = pathlib.Path(path1)/fil
@@ -353,12 +356,12 @@ class User():
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return"\nLogin to Continue"
-        p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
+        p = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if p == 1:
             curr_dir = pathlib.Path("/Root/Admin/")
         else:
             curr_dir = pathlib.Path("/Root/NotAdmin/")
-        path1 = pathlib.PurePath(curr_dir).joinpath(str(self.userId),self.client_directory)
+        path1 = pathlib.PurePath(curr_dir).joinpath(str(self.user_Id),self.client_directory)
         total_avail_dir = []
         for sub in pathlib.Path(path1).iterdir():
             if sub.is_dir(pathlib.PurePath.joinpath(path1, sub)):
