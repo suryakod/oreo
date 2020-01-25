@@ -138,7 +138,7 @@ class User():
         if self.islogin:
             return "\nAlready logged in"
         if user_Id not in logindata['username'].tolist():
-            return "\nUsername not registered"
+            print("\nUsername not registered")
         if psw != logindata.loc[logindata['username'] == user_Id, 'password'].iloc[0]:
             return "\nWrong password!"
         if user_Id in loginuser['username'].tolist():
