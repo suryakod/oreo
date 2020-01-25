@@ -51,9 +51,9 @@ def clientRequest(usr, message):
     if message.split(" ")[0] == "delete":
         if len(message.split(" ")) == 2:
             return usr.delete(message.split(" ")[1])
-        return "Enter correct command"  
+        return "Enter correct command"
     return "Enter the correct command "
-        
+
 
 
 async def handle_echo(reader, writer):
