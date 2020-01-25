@@ -1,3 +1,7 @@
+'''This program deal with passing commands to the
+server from the client
+'''
+
 import pathlib
 import pandas
 
