@@ -91,6 +91,8 @@ class User():
         --------
         If no username is entered, it diplays that empty user cannot be registered.'''
 
+        self.session()
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         prep = 100
         if user_Id in logindata['username'].tolist():
@@ -134,6 +136,8 @@ class User():
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
+
+        self.session()
 
         if self.islogin:
             return "\nAlready logged in"
@@ -183,6 +187,7 @@ class User():
         then the request is denied.
         '''
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
+        self.session()
 
         if not self.islogin:
             return "\nlogin to continue"
@@ -223,6 +228,7 @@ class User():
         does not point to a folder in the current directory, the request is denied.'''
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
+        self.session()
 
         if not self.islogin:
             return "\nLogin to continue"
@@ -249,7 +255,7 @@ class User():
         -------
         It pnly has access to the current directory and can not print
         the information regarding content in sub- directories.'''
-
+        self.session()
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -280,6 +286,7 @@ class User():
         -------
         SUbsequent calls with the file as name will start from the
         beginning of the file.'''
+        self.session()
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
@@ -320,6 +327,7 @@ class User():
         the new data will be appended to the existing data
         without any data loss.
         '''
+        self.session()
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return "\nLogin to continue!!"
@@ -355,6 +363,7 @@ class User():
         ---------
         The root path will be changed based on the privilge of user
         '''
+        self.session()
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if not self.islogin:
             return"\nLogin to Continue"
