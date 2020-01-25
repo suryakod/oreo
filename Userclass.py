@@ -4,6 +4,7 @@ server from the client
 
 import pathlib
 import pandas
+import os
 
 class User():
     """Used to create a user
@@ -43,7 +44,7 @@ class User():
     create_folder(): Create a new folder with the specified <name> in the current working
                     directory for the user issuing the request. """
 
-    def __init__(self, path, addr):
+    def __init__(self):
         '''The parameters are passed to the __init__ function
         The Parameters include :
         ------
@@ -55,9 +56,6 @@ class User():
         ------
         self.loggedusers : Returns a list of users who are already logged in
         ------'''
-
-        self.path = path
-        self._addr = addr
         self.user_Id = None
         self.islogin = False
         self.createdusers = None
@@ -94,26 +92,29 @@ class User():
         If no username is entered, it diplays that empty user cannot be registered.'''
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-
+        prep = 100
         if user_Id in logindata['username'].tolist():
             print("\nUsername not available")
         if user_Id == "" or psw == "" or privilege == "":
             print("\nYou cannot register empty user")
-        moment = pandas.DataFrame(columns=['username'])
+        moment = pandas.DataFrame(columns=['username','password','isAdmin'])
         moment['username'] = [user_Id]
         moment['password'] = psw
         if privilege.lower() == 'admin':
             moment['isAdmin'] = 1
+            prep = 1
         else:
             moment['isAdmin'] = 0
+            prep = 0
         logindata = logindata.append(moment)
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
-        directoryname = str(self.user_Id)
-        if moment['isAdmin'] == 1:
-            filepath = pathlib.Path("GitHub/oreo/Root/Admin/")/directoryname
+        directoryname = str(user_Id)
+        if prep == 1:
+            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
-            filepath = pathlib.Path("GitHub/oreo/Root/NotAdmin/")/directoryname
-        pathlib.Path(filepath).mkdir(parents=True, exist_ok=True)
+            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
+        #pathlib.Path(pathlib.Path(directoryname)).mkdir(parents=True, exist_ok=True)
+        os.mkdir(os.path.join(filepath, directoryname))
         print("\nRegistered user successfully.")
 
 
@@ -199,6 +200,7 @@ class User():
                 dataf_1['password'] = psw
                 dataf_1['isAdmin'] = priv
                 dataf = dataf.append(dataf_1)
+        print('hello baby')
         dataf.to_csv("ServerAccessSession/Users.csv", index = False)
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         #loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
