@@ -11,11 +11,11 @@ class clienttest(unittest.TestCase):
         '''
         tlog = pandas.DataFrame(columns=['username'])
         tlog['username'] = ['test']
-        tlog['password'] = ['1234']
+        tlog['password'] = ['123']
         tlog['isAdmin'] = 1
 
         user_test = User()
-        user_test.loggedinusers = tlog
+        user_test.createdusers = tlog
         expresults = ['\nWrong password!', '\nUsername not registered', '\nLogin completed.']
         obtresults = []
         tests = [
