@@ -94,9 +94,9 @@ class User():
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         prep = 100
         if user_Id in logindata['username'].tolist():
-            print("\nUsername not available")
+            return "\nUsername not available"
         if user_Id == "" or psw == "" or privilege == "":
-            print("\nYou cannot register empty user")
+            return "\nYou cannot register empty user"
         moment = pandas.DataFrame(columns=['username','password','isAdmin'])
         moment['username'] = [user_Id]
         moment['password'] = psw
@@ -115,7 +115,7 @@ class User():
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
         #pathlib.Path(pathlib.Path(directoryname)).mkdir(parents=True, exist_ok=True)
         os.mkdir(os.path.join(filepath, directoryname))
-        print("\nRegistered user successfully.")
+        return "\nRegistered user successfully."
 
 
     def login(self, user_Id, psw):
@@ -136,13 +136,13 @@ class User():
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
 
         if self.islogin:
-            print("\nAlready logged in")
+            return "\nAlready logged in"
         if user_Id not in logindata['username'].tolist():
-            print("\nUsername not registered")
+            return "\nUsername not registered"
         if psw != logindata.loc[logindata['username'] == user_Id, 'password'].iloc[0]:
-            print("\nWrong password!")
+            return "\nWrong password!"
         if user_Id in loginuser['username'].tolist():
-            print("\nLogged in from different address")
+            return "\nLogged in from different address"
 
         self.is_login = True
         self.username = user_Id
@@ -152,7 +152,7 @@ class User():
         loginuser = loginuser.append(tmoment)
         loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
 
-        print("\nLogin completed.")
+        return "\nLogin completed."
 
 
     def quit(self):
@@ -168,9 +168,9 @@ class User():
             self.client_directory = ""
             self.islogin = False
             self.rdindex = {}
-            print("\nSigned out")
+            return "\nSigned out"
         except KeyError:
-            print("\nSigned out")
+            return "\nSigned out"
 
 
     def delete(self, user_Id, pws):
