@@ -4,6 +4,7 @@ server from the client
 
 import pathlib
 import pandas
+import os
 
 class User():
     """Used to create a user
@@ -43,7 +44,7 @@ class User():
     create_folder(): Create a new folder with the specified <name> in the current working
                     directory for the user issuing the request. """
 
-    def __init__(self, path, addr):
+    def __init__(self):
         '''The parameters are passed to the __init__ function
         The Parameters include :
         ------
@@ -55,9 +56,6 @@ class User():
         ------
         self.loggedusers : Returns a list of users who are already logged in
         ------'''
-
-        self.path = path
-        self._addr = addr
         self.user_Id = None
         self.islogin = False
         self.createdusers = None
@@ -94,27 +92,30 @@ class User():
         If no username is entered, it diplays that empty user cannot be registered.'''
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-
+        prep = 100
         if user_Id in logindata['username'].tolist():
-            print("\nUsername not available")
+            return "\nUsername not available"
         if user_Id == "" or psw == "" or privilege == "":
-            print("\nYou cannot register empty user")
-        moment = pandas.DataFrame(columns=['username'])
+            return "\nYou cannot register empty user"
+        moment = pandas.DataFrame(columns=['username','password','isAdmin'])
         moment['username'] = [user_Id]
         moment['password'] = psw
         if privilege.lower() == 'admin':
             moment['isAdmin'] = 1
+            prep = 1
         else:
             moment['isAdmin'] = 0
+            prep = 0
         logindata = logindata.append(moment)
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
-        directoryname = str(self.user_Id)
-        if moment['isAdmin'] == 1:
-            filepath = pathlib.Path("GitHub/oreo/Root/Admin/")/directoryname
+        directoryname = str(user_Id)
+        if prep == 1:
+            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
-            filepath = pathlib.Path("GitHub/oreo/Root/NotAdmin/")/directoryname
-        pathlib.Path(filepath).mkdir(parents=True, exist_ok=True)
-        print("\nRegistered user successfully.")
+            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
+        #pathlib.Path(pathlib.Path(directoryname)).mkdir(parents=True, exist_ok=True)
+        os.mkdir(os.path.join(filepath, directoryname))
+        return "\nRegistered user successfully."
 
 
     def login(self, user_Id, psw):
@@ -135,13 +136,13 @@ class User():
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
 
         if self.islogin:
-            print("\nAlready logged in")
+            return "\nAlready logged in"
         if user_Id not in logindata['username'].tolist():
-            print("\nUsername not registered")
+            return "\nUsername not registered"
         if psw != logindata.loc[logindata['username'] == user_Id, 'password'].iloc[0]:
-            print("\nWrong password!")
+            return "\nWrong password!"
         if user_Id in loginuser['username'].tolist():
-            print("\nLogged in from different address")
+            return "\nLogged in from different address"
 
         self.is_login = True
         self.username = user_Id
@@ -151,7 +152,7 @@ class User():
         loginuser = loginuser.append(tmoment)
         loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
 
-        print("\nLogin completed.")
+        return "\nLogin completed."
 
 
     def quit(self):
@@ -167,9 +168,9 @@ class User():
             self.client_directory = ""
             self.islogin = False
             self.rdindex = {}
-            print("\nSigned out")
+            return "\nSigned out"
         except KeyError:
-            print("\nSigned out")
+            return "\nSigned out"
 
 
     def delete(self, user_Id, pws):
@@ -199,6 +200,7 @@ class User():
                 dataf_1['password'] = psw
                 dataf_1['isAdmin'] = priv
                 dataf = dataf.append(dataf_1)
+        print('hello baby')
         dataf.to_csv("ServerAccessSession/Users.csv", index = False)
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         #loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')

@@ -18,7 +18,7 @@ async def tcp_echo_client():
         '127.0.0.1', 8080)
     message = ''
     while True:
-        message = input('Enter command ::\n')
+        message = input('Enter command ::')
         if message == "":
             print("Invalid Command\n")
             continue
