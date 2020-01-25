@@ -1,10 +1,17 @@
+'''
+This program deals with the testing of
+the server-client application
+'''
 import unittest
 import pandas
 import sys
 from Userclass import User
 
 class clienttest(unittest.TestCase):
-
+    '''
+    This class defines the tests that are conducted
+    for the functions defined in the client-server application
+    '''
     def test_login(self):
         '''
         This function deals with test for login data
