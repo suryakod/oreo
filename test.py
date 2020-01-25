@@ -84,7 +84,10 @@ class clienttest(unittest.TestCase):
         self.assertListEqual(obtresults, expresults)
 
 def step_completed(test_to_use):
-
+    '''
+    This function deals with execution of all the
+    tests in sequence and returns the result
+    '''
     load = unittest.TestLoader()
     suite = unittest.TestSuite()
 
@@ -97,12 +100,18 @@ def step_completed(test_to_use):
 
     return result.wasSuccessful()
 
-def login_test():
+def testing():
+    '''
+    This function executes the function of step_completed
+    '''
     print('*'*60 + "\nTesting:\n")
     return step_completed(clienttest)
 
 if __name__ == "__main__":
-    if login_test() is not True:
+    '''
+    This section delivers the result of the tests
+    '''
+    if testing() is not True:
         print("\n\tThe tests did not pass,")
         sys.exit(1)
 
