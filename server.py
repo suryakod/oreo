@@ -61,7 +61,7 @@ async def handle_echo(reader, writer):
     message = f"{addr} is connected !!!!"
     print(message)
     #print(os.getcwd())
-    usr = User(os.getcwd(),addr)
+    usr = User()
     #print(usr._addr)
     #print(type(usr))
     while True:
@@ -73,7 +73,8 @@ async def handle_echo(reader, writer):
         print(f"Received {message} from {addr}")
         #print(f"Send: {message}")
         mymsg = clientRequest(usr,message)
-        writer.write(str.encode(mymsg))
+        msg = str(mymsg)
+        writer.write(str.encode(msg))
         await writer.drain()
     print("Close the connection")
     writer.close()
