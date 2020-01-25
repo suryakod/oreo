@@ -39,7 +39,7 @@ class User():
     create_folder(): Create a new folder with the specified <name> in the current working 
                     directory for the user issuing the request. """
 
-    def __init__(self,path,addr):
+    def __init__(self, path, addr):
         '''The parameters are passed to the __init__ function 
         The Parameters include :
         ------
@@ -66,7 +66,7 @@ class User():
         self.createdusers = pandas.read_csv("ServerAccessSession/Users.csv")
         self.loggedinusers = pandas.read_csv("ServerAccessSession/logged_in_Users.csv")
 
-    def rm_tree(self,path1):
+    def rm_tree(self, path1):
         '''This function deals with  '''
         for child in path1.iterdir():
             if child.is_file():
@@ -75,7 +75,7 @@ class User():
                 self.rm_tree(child)
         path1.rmdir()
 
-    def register(self,userId,psw,privilege):
+    def register(self, userId, psw, privilege):
         '''This function is used to create a new user with the privileges
         to the server using the username and password provided.
         --------
@@ -102,15 +102,15 @@ class User():
         logindata = logindata.append(moment)
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
         directoryname = str(self.userId)
-        if(moment['isAdmin']==1):
+        if moment['isAdmin'] == 1:
             filepath = pathlib.Path("GitHub/oreo/Root/Admin/")/directoryname
         else:
             filepath = pathlib.Path("GitHub/oreo/Root/NotAdmin/")/directoryname
-        pathlib.Path(filepath).mkdir(parents=True,exist_ok=True)
+        pathlib.Path(filepath).mkdir(parents=True, exist_ok=True)
         print("\nRegistered user successfully.")
 
    
-    def login(self,userId,psw):
+    def login(self, userId, psw):
         '''This function is used to login the user, when respective credentials
         are provided by the user.
         --------
@@ -157,7 +157,7 @@ class User():
                 loginuser['username'] = usrlist
                 loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
             self.userId = None
-            self.client_directory= ""
+            self.client_directory = ""
             self.islogin = False
             self.rdindex = {}
             print("\nSigned out")
@@ -166,7 +166,7 @@ class User():
 
 
 
-    def delete(self,userId,pws):
+    def delete(self, userId, pws):
         '''This function is used to delete a user's account.
         -------
         NOTE: This service is *only* available to the users with a privilege
@@ -183,12 +183,12 @@ class User():
             return "\n you should be admin."
         if userId not in logindata['username'].tolist():
             return "\nNo user with username "+ userId + "found"
-        if pws != str(logindata.loc[logindata['username']==userId,'password'].iloc[0]):
+        if pws != str(logindata.loc[logindata['username'] == userId, 'password'].iloc[0]):
             return "\nEnter correct password"
-        dataf = pandas.DataFrame(columns=['username','password','isAdmin'])
-        for us,psw,priv in zip(logindata['username'].tolist(),logindata['password'].tolist(),logindata['isAdmin'].tolist()):
+        dataf = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
+        for us, psw, priv in zip(logindata['username'].tolist(), logindata['password'].tolist(), logindata['isAdmin'].tolist()):
             if us != userId:
-                dataf_1 = pandas.DataFrame(columns=['username','password','isAdmin'])
+                dataf_1 = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
                 dataf_1['username'] = [userId]
                 dataf_1['password'] = psw
                 dataf_1['isAdmin'] = priv
@@ -199,7 +199,7 @@ class User():
         if self.userId == userId:
             self.quit()
         n = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
-        if (n==1):
+        if (n == 1):
             path = pathlib.Path("/Root/Admin/")
         else:
             path = pathlib.Path("/Root/NotAdmin/")
@@ -207,7 +207,7 @@ class User():
         self.rm_tree(path)
         return"\nDeleted" + userId + "successfully"
 
-    def change_folder(self,directory):
+    def change_folder(self, directory):
         '''This function is used to move the current directory for 
         the current user to the specified folde residing in the current folder.
         -------
@@ -219,15 +219,15 @@ class User():
         if not self.islogin:
             return "\nLogin to continue"
         n = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
-        if (n==1):
+        if (n == 1):
             path = pathlib.Path("/Root/Admin/")
         else:
             path = pathlib.Path("/Root/NotAdmin/")
         path = path/str(self.userId)
         totaldir = [e for e in path.iterdir() if e.is_dir()]
-        path_change = pathlib.PurePath(path).joinpath(self.client_directory,directory)
+        path_change = pathlib.PurePath(path).joinpath(self.client_directory, directory)
         if path_change in totaldir:
-            self.client_directory = pathlib.PurePath().joinpath(self.client_directory,directory)
+            self.client_directory = pathlib.PurePath().joinpath(self.client_directory, directory)
             return "\n changed directory to "+directory+"successful"
         return"\nInput correct directory name"
 
@@ -246,21 +246,21 @@ class User():
         if not self.islogin:
             return "\nLogin to continue!!"
         p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
-        if(p==1):
-            path = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId),self.client_directory)
+        if p == 1:
+            path = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId), self.client_directory)
         else:
-            path = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId),self.client_directory)
+            path = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId), self.client_directory)
         totaldir = []
         for file_name in path.iterdir():
-            totaldir.append([str(file_name),str(file_name.stat().st_size),str(file_name.stat().st_mtime)])
+            totaldir.append([str(file_name), str(file_name.stat().st_size), str(file_name.stat().st_mtime)])
         details = "\nFile|Size|Modified Date"
         for data in totaldir:
-            line = " | ".join([data[0],data[1],data[2]]) + "\n"
+            line = " | ".join([data[0], data[1], data[2]]) + "\n"
             details += "-------\n" + line
         return details
 
 
-    def read_file(self,path):
+    def read_file(self, path):
         '''This function is used to read data from the current 
         working directory for the ser issuing the request.
         -------
@@ -277,22 +277,22 @@ class User():
         if not self.islogin:
             return "\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
-        if(p==1):
-            path_d = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId),self.client_directory)
+        if p == 1:
+            path_d = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId), self.client_directory)
         else:
-            path_d = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId),self.client_directory)
+            path_d = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId), self.client_directory)
 
         files = []
         for f in pathlib.Path(path_d).iterdir():
-            path1 = pathlib.Path.joinpath(path_d,f)
+            path1 = pathlib.Path.joinpath(path_d, f)
             if pathlib.Path(path1).is_file():
                 files.append(f)
         if path not in files:
             return "\ngiven file not found"
-        t_path = pathlib.Path.joinpath(path_d,path)
+        t_path = pathlib.Path.joinpath(path_d, path)
         if t_path not in list(self.rdindex.keys()):
             self.rdindex[t_path] = 0
-        with open(t_path,"r") as fi:
+        with open(t_path, "r") as fi:
             cont = fi.read()
         old_inx = str(self.rdindex[t_path]*self.char_count)
         indx = self.rdindex[t_path]
@@ -301,7 +301,7 @@ class User():
         self.rdindex[t_path] %= len(cont)//self.char_count+1
         return "\n"+"Read file from"+old_inx+" to " + str(int(old_inx)+self.char_count)+"are\n"+data
 
-    def write_file(self,path):
+    def write_file(self, path):
         ''' 
         This function appends data to the file in the diectotry 
         as per the command given
@@ -316,16 +316,16 @@ class User():
         if not self.islogin:
             return "\nLogin to continue!!"
         p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
-        if(p==1):
-            path1 = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId),self.client_directory,path)
+        if p == 1:
+            path1 = pathlib.PurePath("/Root/Admin/").joinpath(str(self.userId), self.client_directory, path)
         else:
-            path1 = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId),self.client_directory,path)
+            path1 = pathlib.PurePath("/Root/NotAdmin/").joinpath(str(self.userId), self.client_directory, path)
         t_file = []
         for fil in pathlib.Path(path1).iterdir():
             p = pathlib.Path(path1)/fil
             if p.is_file:
                 t_file.append(fil)
-        if(path in t_file):
+        if path in t_file:
             with open(path1, "a+") as file:
                 msg = input("user input")
                 file.write(msg)
@@ -338,8 +338,7 @@ class User():
         return"\nSuccessfully written"
     
     
-    
-    def create_folder(self,path):
+    def create_folder(self, path):
         '''
         This function creates new directory as per the user command
         --------
@@ -352,17 +351,17 @@ class User():
         if not self.islogin:
             return"\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
-        if(p==1):
+        if p == 1:
             curr_dir = pathlib.Path("/Root/Admin/")
         else:
             curr_dir = pathlib.Path("/Root/NotAdmin/")
         path1 = pathlib.PurePath(curr_dir).joinpath(str(self.userId),self.client_directory)
         total_avail_dir = []
         for sub in pathlib.Path(path1).iterdir():
-            if (sub.is_dir(pathlib.PurePath.joinpath(path1,sub))):
+            if sub.is_dir(pathlib.PurePath.joinpath(path1, sub)):
                 total_avail_dir.append(sub)
         if path in total_avail_dir:
             return "\nThis directory is already created"
-        pathlib.Path(path1).mkdir(parents=True,exist_ok=True)
+        pathlib.Path(path1).mkdir(parents=True, exist_ok=True)
         return"\nSuccess"
 
