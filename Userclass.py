@@ -99,7 +99,7 @@ class User():
             return "\nUsername not available"
         if user_Id == "" or psw == "" or privilege == "":
             return "\nYou cannot register empty user"
-        moment = pandas.DataFrame(columns=['username','password','isAdmin'])
+        moment = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
         moment['username'] = [user_Id]
         moment['password'] = psw
         if privilege.lower() == 'admin':
@@ -208,7 +208,7 @@ class User():
         print('hello baby')
         dataf.to_csv("ServerAccessSession/Users.csv", index = False)
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        
+
         if self.user_Id == user_Id:
             self.quit()
         n = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
@@ -261,9 +261,9 @@ class User():
             return "\nLogin to continue!!"
         p = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if p == 1:
-            path = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/",str(self.user_Id), self.client_directory)
+            path = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
         else:
-            path = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/",str(self.user_Id), self.client_directory)
+            path = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
         totaldir = []
         for file_name in path.iterdir():
             totaldir.append([str(file_name), str(file_name.stat().st_size), str(file_name.stat().st_mtime)])
@@ -293,9 +293,9 @@ class User():
             return "\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if p == 1:
-            path_d = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/",str(self.user_Id), self.client_directory)
+            path_d = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
         else:
-            path_d = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/",str(self.user_Id), self.client_directory)
+            path_d = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
 
         files = []
         for f in pathlib.Path(path_d).iterdir():
@@ -314,7 +314,7 @@ class User():
         data = cont[indx*self.char_count:(indx+1)*self.char_count]
         self.rdindex[t_path] += 1
         self.rdindex[t_path] %= len(cont)//self.char_count+1
-        return "\n"+"Read file from"+old_inx+" to " + str(int(old_inx)+self.char_count)+"are\n"+data
+        return "\n" + "Read file from" + old_inx + "to" + str(int(old_inx)+self.char_count) + "are\n" + data
 
     def write_file(self, path):
         '''
@@ -333,12 +333,12 @@ class User():
             return "\nLogin to continue!!"
         p = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])
         if p == 1:
-            path1 = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/",str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory, path)
         else:
-            path1 = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/",str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
         t_file = []
         for fil in pathlib.Path(path1).iterdir():
-            p = os.path.join(path1,fil)
+            p = os.path.join(path1, fil)
             if p.is_file:
                 t_file.append(fil)
         if path in t_file:
@@ -372,7 +372,7 @@ class User():
             curr_dir = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
             curr_dir = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
-        path1 = os.path.join(curr_dir,str(self.user_Id),self.client_directory)
+        path1 = os.path.join(curr_dir, str(self.user_Id), self.client_directory)
         total_avail_dir = []
         for sub in pathlib.Path(path1).iterdir():
             if sub.is_dir(os.path.join(path1, sub)):
