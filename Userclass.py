@@ -2,7 +2,7 @@ import pathlib
 import pandas
 
 class User():
-    """Used to create a user 
+    """Used to create a user
     This class involves attributes like
     ------
     self.userId : Returns a string representing the user ID of the user
@@ -51,7 +51,7 @@ class User():
         ------
         self.loggedusers : Returns a list of users who are already logged in
         ------'''
-        
+
         self.path = path
         self._addr = addr
         self.userId = None
@@ -85,7 +85,7 @@ class User():
         available.
         --------
         If no username is entered, it diplays that empty user cannot be registered.'''
-       
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
         if userId in logindata['username'].tolist():
@@ -109,7 +109,7 @@ class User():
         pathlib.Path(filepath).mkdir(parents=True, exist_ok=True)
         print("\nRegistered user successfully.")
 
-   
+
     def login(self, userId, psw):
         '''This function is used to login the user, when respective credentials
         are provided by the user.
@@ -117,16 +117,16 @@ class User():
         When the username and password provided by the user matches the previous
         register data, then the user is allowed to login.
         --------
-        Displays "Username not registered" when the credentials provided doesnot 
+        Displays "Username not registered" when the credentials provided doesnot
         match the previous register data.
         --------
         Displays "Wrong password", if the entered password does not match the registered
         username.'''
 
-        
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
-        
+
         if self.islogin:
             print("\nAlready logged in")
         if userId not in logindata['username'].tolist():
@@ -143,10 +143,10 @@ class User():
         tmoment['username'] = [userId]
         loginuser = loginuser.append(tmoment)
         loginuser.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
-        
+
         print("\nLogin completed.")
 
-        
+
     def quit(self):
         '''This function is used to 'Sign Out' the user from the current login session.'''
 
@@ -214,7 +214,7 @@ class User():
         does not point to a folder in the current directory, the request is denied.'''
 
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        
+
         if not self.islogin:
             return "\nLogin to continue"
         n = int(logindata.loc[logindata['username'] == self.userId, 'isAdmin'].iloc[0])
@@ -230,7 +230,7 @@ class User():
             return "\n changed directory to "+directory+"successful"
         return"\nInput correct directory name"
 
-        
+
     def list(self):
         '''This function gives nformation about the name, size, date and
         time of creation of the request.
@@ -335,8 +335,8 @@ class User():
             file.write(msg)
         file.close()
         return"\nSuccessfully written"
-    
-    
+
+
     def create_folder(self, path):
         '''
         This function creates new directory as per the user command
@@ -363,4 +363,3 @@ class User():
             return "\nThis directory is already created"
         pathlib.Path(path1).mkdir(parents=True, exist_ok=True)
         return"\nSuccess"
-
