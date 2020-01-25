@@ -11,8 +11,10 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 def clientRequest(usr, message):
     usr.session()
-    if str(usr.userId) not in usr.createdusers['username'].tolist():
+    '''
+    if str(usr.user_Id) not in usr.createdusers['username'].tolist():
         return usr.quit()
+    '''
     message = message.rstrip("\n").rstrip(" ").lstrip(" ")
     if message.split(" ")[0] == "commands":
         return usr.commands()
@@ -63,14 +65,15 @@ async def handle_echo(reader, writer):
     #print(usr._addr)
     #print(type(usr))
     while True:
-        data = await reader.read(100)
+        data = await reader.read(4096)
         message = data.decode().strip()
         if message == 'exit':
             break
 
         print(f"Received {message} from {addr}")
         #print(f"Send: {message}")
-        writer.write(clientRequest(usr, message) + '\n'.encode())
+        mymsg = clientRequest(usr,message)
+        writer.write(str.encode(mymsg))
         await writer.drain()
     print("Close the connection")
     writer.close()

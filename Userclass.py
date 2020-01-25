@@ -195,13 +195,13 @@ class User():
         for us, psw, priv in zip(logindata['username'].tolist(), logindata['password'].tolist(), logindata['isAdmin'].tolist()):
             if us != user_Id:
                 dataf_1 = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
-                dataf_1['username'] = [user_Id]
+                dataf_1['username'] = us
                 dataf_1['password'] = psw
                 dataf_1['isAdmin'] = priv
                 dataf = dataf.append(dataf_1)
         dataf.to_csv("ServerAccessSession/Users.csv", index = False)
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
+        #loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         if self.user_Id == user_Id:
             self.quit()
         n = int(logindata.loc[logindata['username'] == self.user_Id, 'isAdmin'].iloc[0])

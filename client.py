@@ -24,7 +24,7 @@ async def tcp_echo_client():
             continue
 
         writer.write(message.encode())
-        data = await reader.read(100)
+        data = await reader.read(4096)
         print(f'Received: {data.decode()}')
         if message.lower() == "quit":
             break
