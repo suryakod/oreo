@@ -20,7 +20,7 @@ def clientRequest(usr, message):
         return usr.commands()
     if message.split(" ")[0] == "register":
         if len(message.split(" ")) == 4:
-            return usr.register(message.split(" ")[1],message.split(" ")[2],message.split(" ")[3])
+            return usr.register(message.split(" ")[1], message.split(" ")[2], message.split(" ")[3])
         return "Enter correct command"
     if message.split(" ")[0] == "logout":
         return usr.quit()
@@ -28,7 +28,7 @@ def clientRequest(usr, message):
         return usr.quit()
     if message.split(" ")[0] == "login":
         if len(message.split(" ")) == 3:
-            return usr.login(message.split(" ")[1],message.split(" ")[2])
+            return usr.login(message.split(" ")[1], message.split(" ")[2])
         return "Enter correct command"
     if message.split(" ")[0] == "list":
         return usr.list()
@@ -72,7 +72,7 @@ async def handle_echo(reader, writer):
 
         print(f"Received {message} from {addr}")
         #print(f"Send: {message}")
-        mymsg = clientRequest(usr,message)
+        mymsg = clientRequest(usr, message)
         msg = str(mymsg).encode()
         writer.write(msg)
         await writer.drain()
