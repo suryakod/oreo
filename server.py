@@ -11,7 +11,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 def clientRequest(usr, message):
     usr.session()
-    if str(usr.userId) not in usr.createdusers['username'].tolist():
+    if str(usr.user_Id) not in usr.createdusers['username'].tolist():
         return usr.quit()
     message = message.rstrip("\n").rstrip(" ").lstrip(" ")
     if message.split(" ")[0] == "commands":
@@ -49,9 +49,9 @@ def clientRequest(usr, message):
     if message.split(" ")[0] == "delete":
         if len(message.split(" ")) == 2:
             return usr.delete(message.split(" ")[1])
-        return "Enter correct command"  
+        return "Enter correct command"
     return "Enter the correct command "
-        
+
 
 
 async def handle_echo(reader, writer):
