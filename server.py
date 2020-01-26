@@ -9,11 +9,13 @@ from Userclass import User
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 def clientRequest(usr, message):
+    '''
+    This function initiates the functions for given commands for user
+    '''
     usr.session()
-    '''
-    if str(usr.user_Id) not in usr.createdusers['username'].tolist():
-        return usr.quit()
-    '''
+    #if str(usr.user_Id) not in usr.createdusers['username'].tolist():
+    #return usr.quit()
+
     message = message.rstrip("\n").rstrip(" ").lstrip(" ")
     if message.split(" ")[0] == "commands":
         return usr.commands()
