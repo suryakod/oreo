@@ -175,7 +175,7 @@ class User():
             liu.append(l['data'][i][0])
             lip.append(l['data'][i][1])
         if self.is_login:
-            return "\nAlready logged in"
+            return "\nAlready logged in"       
         if user_Id not in liu:
             return "\nUsername not registered"
         if psw not in lip:
@@ -243,7 +243,7 @@ class User():
 
         if self.user_Id == user_Id:
             self.quit()
-
+        
         if (n == 1):
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
