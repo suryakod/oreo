@@ -8,7 +8,7 @@ from Userclass import User
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-def client_Request(usr, message):
+def client_request(usr, message):
     '''
     This function initiates the functions for given commands for user
     '''
@@ -77,7 +77,7 @@ async def handle_echo(reader, writer):
 
         print(f"Received {message} from {addr}")
         #print(f"Send: {message}")
-        mymsg = client_Request(usr, message)
+        mymsg = client_request(usr, message)
         msg = str(mymsg).encode()
         writer.write(msg)
         await writer.drain()
