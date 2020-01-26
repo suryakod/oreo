@@ -4,11 +4,7 @@ server from the client
 
 import pathlib
 import os
-<<<<<<< HEAD
 import pandas
-=======
-from shutil import rmtree 
->>>>>>> bfbad923f6c1b56ebae0af53380282cc7be98966
 
 class User():
     """Used to create a user
@@ -133,11 +129,7 @@ class User():
             return "\nUsername not available"
         if user_Id == "" or psw == "" or privilege == "":
             return "\nYou cannot register empty user"
-<<<<<<< HEAD
         moment = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
-=======
-        moment = pandas.DataFrame(columns=['username'])
->>>>>>> bfbad923f6c1b56ebae0af53380282cc7be98966
         moment['username'] = [user_Id]
         moment['password'] = psw
         if privilege.lower() == 'admin':
@@ -380,14 +372,8 @@ class User():
             path1 = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
         t_file = []
         for fil in pathlib.Path(path1).iterdir():
-<<<<<<< HEAD
             p = os.path.join(path1, fil)
             if p.is_file:
-=======
-            p = os.path.join(path1,fil)
-            p1 =pathlib.Path(p)
-            if p1.is_file:
->>>>>>> bfbad923f6c1b56ebae0af53380282cc7be98966
                 t_file.append(fil)
         if path in t_file:
             with open(path1, "a+") as file:
