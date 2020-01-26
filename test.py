@@ -17,28 +17,49 @@ class TestClient(unittest.TestCase):
         This function deals with test for login data
         '''
         tlog = pandas.DataFrame(columns=['username'])
+<<<<<<< HEAD
         tlog['username'] = ['test']
         tlog['password'] = ['123']
+=======
+        tlog['username'] = ['test1']
+        tlog['password'] = ['1234']
+>>>>>>> bfbad923f6c1b56ebae0af53380282cc7be98966
         tlog['isAdmin'] = 1
 
         user_test = User()
         user_test.createdusers = tlog
+<<<<<<< HEAD
         expresults = ['\nWrong password!']
         obtresults = []
         tests = [
             ['test', '1234'],
+=======
+        user_test.createdusers.to_csv('ServerAccessSession/Users.csv', index = False)
+        expresults = ['\nWrong password!', '\nUsername not registered', '\nLogin completed.']
+        obtresults = []
+        tests = [
+            ['test1', 12356],
+            ['test2', 123],
+            ['test1', 1234]
+>>>>>>> bfbad923f6c1b56ebae0af53380282cc7be98966
         ]
 
         for test in tests:
-            obtresults.append(user_test.login(
-                test[0], test[1]))
+            obtresults.append(user_test.login(test[0], test[1]))
         user_test.quit()
+<<<<<<< HEAD
         login_rst = pandas.DataFrame(columns=['username'])
         login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
+=======
+        login_rest = pandas.DataFrame(columns = ['username'])
+        login_rest.to_csv('ServerAccessSession/logged_in_Users.csv', index= False)
+        login_rst = pandas.DataFrame(columns = ['username','password','isAdmin'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index = False)
+>>>>>>> bfbad923f6c1b56ebae0af53380282cc7be98966
 
         self.assertListEqual(obtresults, expresults)
 
-
+'''
     def test_registration(self):
         '''
         This function deals with tests for registration
@@ -50,23 +71,27 @@ class TestClient(unittest.TestCase):
 
         user_test = User()
         user_test.createdusers = tlog
-        expresults = ['\nUsername not available']
+        expresults = ['\nRegistered user successfully.']
         obtresults = []
         tests = [
-            ['test', '1234', 'Admin'],
-            ['test2', '123', 'Admin'],
-            ['test', '123', 'Admin']
+            ['test', '1234', 'Admin']
         ]
 
         for test in tests:
             obtresults.append(user_test.register(
                 test[0], test[1], test[2]))
         user_test.quit()
+<<<<<<< HEAD
         login_rst = pandas.DataFrame(columns=['username'])
         login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
+=======
+        #login_rst = pandas.DataFrame(columns = ['username','password','isAdmin'])
+        #login_rst.to_csv('ServerAccessSession/Users.csv', index = False)
+    
+>>>>>>> bfbad923f6c1b56ebae0af53380282cc7be98966
         self.assertListEqual(obtresults, expresults)
-
+'''
 
     def test_read_file(self):
         '''
