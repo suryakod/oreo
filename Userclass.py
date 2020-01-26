@@ -64,12 +64,41 @@ class User():
         self.rdindex = {}
         self.char_count = 100
 
+
+    def commands(self):
+        '''
+        This function returns the commands that can be used by the user
+        and the functionality of the command
+        '''
+        cmnds = ['register : This command regsiters user'
+                 '\n=============================================================================',
+                 '\nlogin : This command logins the user once registererd'
+                 '\n=============================================================================',
+                 '\nquit : This command logouts from the session of a user'
+                 '\n=============================================================================',
+                 '\ndelete : This command deletes the user file. This command is only for Admin'
+                 '\n=============================================================================',
+                 '\nchange_folder : This command changes the current directory of the user'
+                 '\n=============================================================================',
+                 '\nlist : This command gives the information of the request placed'
+                 '\n=============================================================================',
+                 '\nread_file : This command reads data from the current working directory'
+                 '\n=============================================================================',
+                 '\nwrite_file : This command appends data to the current working directory'
+                 '\n=============================================================================',
+                 '\ncreate_folder : This command creates a new directory as per user command'
+                 '\n=============================================================================',
+                ]
+        print(cmnds)
+
+
     def session(self):
         '''
         This function deals with accessing of user login information
         '''
         self.createdusers = pandas.read_csv("ServerAccessSession/Users.csv")
         self.loggedinusers = pandas.read_csv("ServerAccessSession/logged_in_Users.csv")
+
 
     def rm_tree(self, path1):
         '''This function deals with  '''
@@ -79,6 +108,7 @@ class User():
             else:
                 self.rm_tree(child)
         path1.rmdir()
+
 
     def register(self, user_Id, psw, privilege):
         '''This function is used to create a new user with the privileges
@@ -220,9 +250,10 @@ class User():
         self.rm_tree(path)
         return"\nDeleted" + user_Id + "successfully"
 
+
     def change_folder(self, directory):
         '''This function is used to move the current directory for
-        the current user to the specified folde residing in the current folder.
+        the current user to the specified folder residing in the current folder.
         -------
         When the user is provided a username ans password to login, if the name
         does not point to a folder in the current directory, the request is denied.'''
@@ -315,6 +346,7 @@ class User():
         self.rdindex[t_path] += 1
         self.rdindex[t_path] %= len(cont)//self.char_count+1
         return "\n" + "Read file from" + old_inx + "to" + str(int(old_inx)+self.char_count) + "are\n" + data
+
 
     def write_file(self, path):
         '''
