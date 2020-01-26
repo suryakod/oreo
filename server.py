@@ -4,7 +4,6 @@ This file is the server program using async I/O
 '''
 import asyncio
 import signal
-import os
 from Userclass import User
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -57,6 +56,10 @@ def clientRequest(usr, message):
 
 
 async def handle_echo(reader, writer):
+    '''
+    This funtion acknowledges the connection from the client,
+    acknowledges the messages from the client
+    '''
     addr = writer.get_extra_info('peername')
     message = f"{addr} is connected !!!!"
     print(message)
@@ -81,6 +84,9 @@ async def handle_echo(reader, writer):
 
 
 async def main():
+    '''
+    This function starts the connection between the server and client
+    '''
     server = await asyncio.start_server(
         handle_echo, '127.0.0.1', 8080)
 
