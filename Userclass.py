@@ -224,7 +224,7 @@ class User():
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if self.is_login != True:
             return "\nlogin to continue"
-        if int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values) != 1:
+        if (logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values) != 1:
             return "\n you should be admin."
         if user_Id not in logindata['username'].tolist():
             return "\nNo user with username "+ user_Id + "found"

@@ -22,7 +22,11 @@ class TestClient(unittest.TestCase):
         tlog['isAdmin'] = 1
 
         user_test = User()
-        user_test.register('test','1234','admin')
+        user_test.createdusers= tlog
+        
+        user_test.login('test',123)
+        print(user_test.delete1('test',123))
+        user_test.register('test','123','admin')
         expresults = ['\nWrong password!']
         obtresults = []
         tests = [
@@ -31,10 +35,11 @@ class TestClient(unittest.TestCase):
 
         for test in tests:
             obtresults.append(user_test.login(test[0], test[1]))
+        user_test.is_login = True
+        print(user_test.delete1('test',123))
         user_test.quit()
-        user_test.delete1('test',123)
-        login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
+        #login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
+        #login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresults, expresults)
 
@@ -49,6 +54,7 @@ class TestClient(unittest.TestCase):
         tlog['isAdmin'] = 1
 
         user_test = User()
+        user_test.is_login = True
         user_test.delete1('test1',1234)
         user_test.createdusers = tlog
         expresults = ['\nRegistered user successfully.']
@@ -60,10 +66,10 @@ class TestClient(unittest.TestCase):
         for test in tests:
             obtresults.append(user_test.register(test[0], test[1], test[2]))
         
-        user_test.quit()
-        user_test.delete1('test1',1234)
-        login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
+        #user_test.quit()
+        print(user_test.delete1('test1',1234))
+        #login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
+        #login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresults, expresults)
 
