@@ -8,10 +8,7 @@ user commands are executed as per the Userclass
 --------
 The connection is closed based on the user request 
 '''
-
-
 import asyncio
-
 
 async def tcp_echo_client():
     reader, writer = await asyncio.open_connection(
