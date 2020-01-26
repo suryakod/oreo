@@ -3,8 +3,8 @@ server from the client
 '''
 
 import pathlib
-import pandas
 import os
+import pandas
 
 class User():
     """Used to create a user
