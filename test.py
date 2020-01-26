@@ -91,6 +91,21 @@ class clienttest(unittest.TestCase):
         self.assertListEqual(obtresults, expresults)
 
 
+    def test_commands(self):
+        '''
+        This test the commands used by the client
+        '''
+        user_test = User()
+        exptoutput = user_test.commands
+
+        user_test.quit()
+
+        login_rst = pandas.DataFrame(columns = ['username'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index = False)
+
+        self.assertTrue(exptoutput)
+
+
 def step_completed(test_to_use):
     '''
     This function deals with execution of all the
