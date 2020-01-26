@@ -56,7 +56,6 @@ def client_request(usr, message):
     return "Enter the correct command "
 
 
-
 async def handle_echo(reader, writer):
     '''
     This funtion acknowledges the connection from the client,

@@ -65,31 +65,6 @@ class TestClient(unittest.TestCase):
         self.assertListEqual(obtresults, expresults)
 
 
-    def test_read_file(self):
-        '''
-        This function deals with testing of read file
-        '''
-        tlog = pandas.DataFrame(columns=['username'])
-        tlog['username'] = ['test']
-        tlog['password'] = ['123']
-        tlog['isAdmin'] = 1
-        obtresults = []
-        expresults = ['\ngiven file not found',
-                      '\nRead file from 0 to 100 are - \nDontChangeThisContent'
-                     ]
-        user_test = User()
-        user_test.createdusers = tlog
-        user_test.login('test', '123')
-        user_test.change_folder('testfolder1')
-        obtresults.append(user_test.read_file('test_read2.txt'))
-        obtresults.append(user_test.read_file('test_read.txt'))
-        user_test.quit()
-        login_rst = pandas.DataFrame(columns=['username'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
-
-        self.assertListEqual(obtresults, expresults)
-
-
     def test_commands(self):
         '''
         This test the commands used by the client
@@ -103,6 +78,23 @@ class TestClient(unittest.TestCase):
         login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertTrue(exptoutput)
+
+
+    def test_quit(self):
+        """
+        This test will check quit response.
+        """
+        expresult = ["\nSigned out"]
+        obtresult = []
+
+        user_test = User()
+
+        obtresult.append(user_test.quit())
+
+        login_rst = pandas.DataFrame(columns=['username'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
+
+        self.assertListEqual(obtresult, expresult)
 
 
 def step_completed(test_to_use):
@@ -129,6 +121,7 @@ def testing():
     '''
     print('*'*60 + "\nTesting:\n")
     return step_completed(TestClient)
+
 
 if __name__ == "__main__":
     if testing() is not True:
