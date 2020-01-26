@@ -22,11 +22,10 @@ class TestClient(unittest.TestCase):
         tlog['isAdmin'] = 1
 
         user_test = User()
-        user_test.createdusers= tlog
-        
-        user_test.login('test',123)
-        print(user_test.delete1('test',123))
-        user_test.register('test','123','admin')
+        user_test.createdusers = tlog
+        user_test.login('test', 123)
+        print(user_test.delete1('test', 123))
+        user_test.register('test', '123', 'admin')
         expresults = ['\nWrong password!']
         obtresults = []
         tests = [
@@ -36,10 +35,8 @@ class TestClient(unittest.TestCase):
         for test in tests:
             obtresults.append(user_test.login(test[0], test[1]))
         user_test.is_login = True
-        print(user_test.delete1('test',123))
+        print(user_test.delete1('test', 123))
         user_test.quit()
-        #login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
-        #login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresults, expresults)
 
@@ -55,7 +52,7 @@ class TestClient(unittest.TestCase):
 
         user_test = User()
         user_test.is_login = True
-        user_test.delete1('test1',1234)
+        user_test.delete1('test1', 1234)
         user_test.createdusers = tlog
         expresults = ['\nRegistered user successfully.']
         obtresults = []
@@ -65,9 +62,8 @@ class TestClient(unittest.TestCase):
 
         for test in tests:
             obtresults.append(user_test.register(test[0], test[1], test[2]))
-        
-        print(user_test.delete1('test1',1234))
-        
+
+        print(user_test.delete1('test1', 1234))
 
         self.assertListEqual(obtresults, expresults)
 
@@ -81,10 +77,11 @@ class TestClient(unittest.TestCase):
 
         user_test.quit()
 
-        login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
+        login_rst = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
         login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertTrue(exptoutput)
+
 
     def test_quit(self):
         """
@@ -97,7 +94,7 @@ class TestClient(unittest.TestCase):
 
         obtresult.append(user_test.quit())
 
-        login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
+        login_rst = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
         login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresult, expresult)

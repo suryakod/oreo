@@ -146,7 +146,7 @@ class User():
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
-        #pathlib.Path(pathlib.Path(directoryname)).mkdir(parents=True, exist_ok=True)
+
         os.mkdir(os.path.join(filepath, directoryname))
         return "\nRegistered user successfully."
 
@@ -163,19 +163,19 @@ class User():
         --------
         Displays "Wrong password", if the entered password does not match the registered
         username.'''
-        l={}
-        liu=[]
-        lip=[]
-        #logindata = pandas.read_csv('ServerAccessSession/Users.csv')
+        l = {}
+        liu = []
+        lip = []
+
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         self.session()
-        l=self.createdusers.to_dict('split')
+        l = self.createdusers.to_dict('split')
         n = len(l['data'])
-        for i in range(0,n):
+        for i in range(0, n):
             liu.append(l['data'][i][0])
             lip.append(l['data'][i][1])
         if self.is_login:
-            return "\nAlready logged in"       
+            return "\nAlready logged in"
         if user_Id not in liu:
             return "\nUsername not registered"
         if psw not in lip:
@@ -200,8 +200,8 @@ class User():
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         try:
             if self.user_Id in loginuser['username'].tolist():
-                login_rest = pandas.DataFrame(columns = ['username'])
-                login_rest.to_csv('ServerAccessSession/logged_in_Users.csv', index= False)
+                login_rest = pandas.DataFrame(columns=['username'])
+                login_rest.to_csv('ServerAccessSession/logged_in_Users.csv', index=False)
             self.user_Id = None
             self.client_directory = ""
             self.is_login = False
@@ -220,7 +220,7 @@ class User():
         If the request is done by a user that does not have admin privileges,
         then the request is denied.
         '''
-        n=1
+        n = 1
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if self.is_login != True:
             return "\nlogin to continue"
@@ -238,17 +238,17 @@ class User():
                 dataf_1['password'] = psw
                 dataf_1['isAdmin'] = priv
                 dataf = dataf.append(dataf_1)
-        dataf.to_csv("ServerAccessSession/Users.csv", index = False)
+        dataf.to_csv("ServerAccessSession/Users.csv", index=False)
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
         if self.user_Id == user_Id:
             self.quit()
-        
-        if (n == 1):
+
+        if n == 1:
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
             return "not admin"
-        path = os.path.join(filepath,str(user_Id))
+        path = os.path.join(filepath, str(user_Id))
         rmtree(path)
         return"\nDeleted  " + user_Id + " successfully"
 
@@ -266,13 +266,13 @@ class User():
         if not self.is_login:
             return "\nLogin to continue"
         n = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
-        if (n == 1):
+        if n == 1:
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
-        path = os.path.join(filepath,str(self.user_Id))
+        path = os.path.join(filepath, str(self.user_Id))
         totaldir = [e for e in pathlib.Path(path).iterdir() if e.is_dir()]
-        path_change = os.path.join(path,self.client_directory, directory)
+        path_change = os.path.join(path, self.client_directory, directory)
         if path_change in totaldir:
             self.client_directory = os.path.join(self.client_directory, directory)
             return "\n changed directory to "+directory+"successful"
@@ -413,5 +413,5 @@ class User():
                 total_avail_dir.append(sub)
         if pathnamefolder in total_avail_dir:
             return "\nThis directory is already created"
-        os.mkdir(os.path.join(path1,pathnamefolder))
+        os.mkdir(os.path.join(path1, pathnamefolder))
         return"\nSuccess"
