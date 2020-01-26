@@ -7,7 +7,7 @@ import sys
 import pandas
 from Userclass import User
 
-class clientTest(unittest.TestCase):
+class TestClient(unittest.TestCase):
     '''
     This class defines the tests that are conducted
     for the functions defined in the client-server application
@@ -131,7 +131,7 @@ def testing():
     This function executes the function of step_completed
     '''
     print('*'*60 + "\nTesting:\n")
-    return step_completed(clientTest)
+    return step_completed(TestClient)
 
 if __name__ == "__main__":
     if testing() is not True:
