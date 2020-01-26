@@ -211,7 +211,7 @@ class User():
             return "\nSigned out"
 
 
-    def delete(self, user_Id, pws):
+    def delete1(self, user_Id, pws):
         '''This function is used to delete a user's account.
         -------
         NOTE: This service is *only* available to the users with a privilege
@@ -222,7 +222,6 @@ class User():
         '''
         n=1
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
-        print((logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values))
         if self.is_login != True:
             return "\nlogin to continue"
         if int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values) != 1:
@@ -248,7 +247,7 @@ class User():
         if (n == 1):
             filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
         else:
-            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
+            return "not admin"
         path = os.path.join(filepath,str(user_Id))
         rmtree(path)
         return"\nDeleted  " + user_Id + " successfully"
