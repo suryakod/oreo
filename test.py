@@ -70,7 +70,7 @@ class TestClient(unittest.TestCase):
         print(user_test.delete1('test1',1234))
         #login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
         #login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
-
+            
         self.assertListEqual(obtresults, expresults)
 
 
@@ -83,10 +83,27 @@ class TestClient(unittest.TestCase):
 
         user_test.quit()
 
-        login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
+        login_rst = pandas.DataFrame(columns=['username'])
         login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertTrue(exptoutput)
+
+
+    def test_quit(self):
+        """
+        This test will check quit response.
+        """
+        expresult = ["\nSigned out"]
+        obtresult = []
+
+        user_test = User()
+
+        obtresult.append(user_test.quit())
+
+        login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
+
+        self.assertListEqual(obtresult, expresult)
 
 
 def step_completed(test_to_use):
@@ -113,6 +130,7 @@ def testing():
     '''
     print('*'*60 + "\nTesting:\n")
     return step_completed(TestClient)
+
 
 if __name__ == "__main__":
     if testing() is not True:
