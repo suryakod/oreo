@@ -33,8 +33,8 @@ class clienttest(unittest.TestCase):
             obtresults.append(user_test.login(
                 test[0], test[1]))
         user_test.quit()
-        login_rst = pandas.DataFrame(columns = ['username'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index = False)
+        login_rst = pandas.DataFrame(columns=['username'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresults, expresults)
 
@@ -62,8 +62,8 @@ class clienttest(unittest.TestCase):
             obtresults.append(user_test.register(
                 test[0], test[1], test[2]))
         user_test.quit()
-        login_rst = pandas.DataFrame(columns = ['username'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index = False)
+        login_rst = pandas.DataFrame(columns=['username'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresults, expresults)
 
@@ -85,8 +85,8 @@ class clienttest(unittest.TestCase):
         obtresults.append(user_test.read_file('test_read2.txt'))
         obtresults.append(user_test.read_file('test_read.txt'))
         user_test.quit()
-        login_rst = pandas.DataFrame(columns = ['username'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index = False)
+        login_rst = pandas.DataFrame(columns=['username'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresults, expresults)
 
@@ -100,8 +100,8 @@ class clienttest(unittest.TestCase):
 
         user_test.quit()
 
-        login_rst = pandas.DataFrame(columns = ['username'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index = False)
+        login_rst = pandas.DataFrame(columns=['username'])
+        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertTrue(exptoutput)
 
@@ -115,7 +115,7 @@ def step_completed(test_to_use):
     suite = unittest.TestSuite()
 
     suite.addTests(load.loadTestsFromTestCase(test_to_use))
-    runtest = unittest.TextTestRunner(verbosity = 2)
+    runtest = unittest.TextTestRunner(verbosity=2)
     result = runtest.run(suite)
 
     if result.skipped:
