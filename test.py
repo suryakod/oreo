@@ -77,7 +77,9 @@ class clienttest(unittest.TestCase):
         tlog['password'] = ['123']
         tlog['isAdmin'] = 1
         obtresults = []
-        expresults = ['\ngiven file not found', '\nRead file from 0 to 100 are - \nDontChangeThisContent']
+        expresults = ['\ngiven file not found',
+                      '\nRead file from 0 to 100 are - \nDontChangeThisContent'
+                     ]
         user_test = User()
         user_test.createdusers = tlog
         user_test.login('test', '123')
