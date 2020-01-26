@@ -3,8 +3,8 @@ This program deals with the testing of
 the server-client application
 '''
 import unittest
-import pandas
 import sys
+import pandas
 from Userclass import User
 
 class clienttest(unittest.TestCase):
