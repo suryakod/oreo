@@ -90,6 +90,7 @@ class clienttest(unittest.TestCase):
 
         self.assertListEqual(obtresults, expresults)
 
+
 def step_completed(test_to_use):
     '''
     This function deals with execution of all the
@@ -106,6 +107,7 @@ def step_completed(test_to_use):
         return False
 
     return result.wasSuccessful()
+
 
 def testing():
     '''
