@@ -132,9 +132,6 @@ def testing():
     return step_completed(clienttest)
 
 if __name__ == "__main__":
-    '''
-    This section delivers the result of the tests
-    '''
     if testing() is not True:
         print("\n\tThe tests did not pass,")
         sys.exit(1)
