@@ -29,7 +29,7 @@ def client_request(usr, message):
         return usr.quit()
     if message.split(" ")[0] == "login":
         if len(message.split(" ")) == 3:
-            return usr.login(message.split(" ")[1], message.split(" ")[2])
+            return usr.login(message.split(" ")[1], int(message.split(" ")[2]))
         return "Enter correct command"
     if message.split(" ")[0] == "list":
         return usr.list()
@@ -49,9 +49,9 @@ def client_request(usr, message):
         if len(message.split(" ")) == 2:
             return usr.create_folder(message.split(" ")[1])
         return "Enter correct command"
-    if message.split(" ")[0] == "delete":
-        if len(message.split(" ")) == 2:
-            return usr.delete(message.split(" ")[1])
+    if message.split(" ")[0] == "delete1":
+        if len(message.split(" ")) == 3:
+            return usr.delete1(message.split(" ")[1], int(message.split(" ")[2]))
         return "Enter correct command"
     return "Enter the correct command "
 

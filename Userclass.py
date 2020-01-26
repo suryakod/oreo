@@ -143,9 +143,9 @@ class User():
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
         directoryname = str(user_Id)
         if prep == 1:
-            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
+            filepath = "/oreo/Root/Admin/"
         else:
-            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
+            filepath = "/oreo/Root/NotAdmin/"
 
         os.mkdir(os.path.join(filepath, directoryname))
         return "\nRegistered user successfully."
@@ -166,6 +166,7 @@ class User():
         l = {}
         liu = []
         lip = []
+        psw = int(psw)
 
         loginuser = pandas.read_csv('ServerAccessSession/logged_in_Users.csv')
         self.session()
@@ -173,7 +174,8 @@ class User():
         n = len(l['data'])
         for i in range(0, n):
             liu.append(l['data'][i][0])
-            lip.append(l['data'][i][1])
+            lip.append(int(l['data'][i][1]))
+            print(lip)
         if self.is_login:
             return "\nAlready logged in"
         if user_Id not in liu:
@@ -245,7 +247,7 @@ class User():
             self.quit()
 
         if n == 1:
-            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
+            filepath = "/oreo/Root/Admin/"
         else:
             return "not admin"
         path = os.path.join(filepath, str(user_Id))
@@ -267,12 +269,15 @@ class User():
             return "\nLogin to continue"
         n = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if n == 1:
-            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
+            filepath = "/oreo/Root/Admin/"
         else:
-            filepath = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
+            filepath = "/oreo/Root/NotAdmin/"
         path = os.path.join(filepath, str(self.user_Id))
         totaldir = [e for e in pathlib.Path(path).iterdir() if e.is_dir()]
         path_change = os.path.join(path, self.client_directory, directory)
+        path_change = os.path.normpath(os.path.realpath(path_change))
+        print(totaldir)
+        print(path_change)
         if path_change in totaldir:
             self.client_directory = os.path.join(self.client_directory, directory)
             return "\n changed directory to "+directory+"successful"
@@ -294,9 +299,9 @@ class User():
             return "\nLogin to continue!!"
         p = (logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
+            path = os.path.join("/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
         else:
-            path = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
+            path = os.path.join("/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
         totaldir = []
         for file_name in path.iterdir():
             totaldir.append([str(file_name), str(file_name.stat().st_size), str(file_name.stat().st_mtime)])
@@ -326,9 +331,9 @@ class User():
             return "\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path_d = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
+            path_d = os.path.join("/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
         else:
-            path_d = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
+            path_d = os.path.join("/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
 
         files = []
         for f in pathlib.Path(path_d).iterdir():
@@ -367,9 +372,9 @@ class User():
             return "\nLogin to continue!!"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path1 = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("/oreo/Root/Admin/", str(self.user_Id), self.client_directory, path)
         else:
-            path1 = os.path.join("c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
         t_file = []
         for fil in pathlib.Path(path1).iterdir():
             p = os.path.join(path1, fil)
@@ -403,9 +408,9 @@ class User():
             return"\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            curr_dir = "c:/Users/gvalm/Documents/GitHub/oreo/Root/Admin/"
+            curr_dir = "/oreo/Root/Admin/"
         else:
-            curr_dir = "c:/Users/gvalm/Documents/GitHub/oreo/Root/NotAdmin/"
+            curr_dir = "/oreo/Root/NotAdmin/"
         path1 = os.path.join(curr_dir, str(self.user_Id), self.client_directory)
         total_avail_dir = []
         for sub in pathlib.Path(path1).iterdir():
