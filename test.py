@@ -22,7 +22,7 @@ class TestClient(unittest.TestCase):
         tlog['isAdmin'] = 1
 
         user_test = User()
-        #user_test.register('test','1234','admin')
+        user_test.register('test','1234','admin')
         expresults = ['\nWrong password!']
         obtresults = []
         tests = [
@@ -63,31 +63,6 @@ class TestClient(unittest.TestCase):
         user_test.quit()
         user_test.delete1('test1',1234)
         login_rst = pandas.DataFrame(columns=['username','password','isAdmin'])
-        login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
-
-        self.assertListEqual(obtresults, expresults)
-
-
-    def test_read_file(self):
-        '''
-        This function deals with testing of read file
-        '''
-        tlog = pandas.DataFrame(columns=['username'])
-        tlog['username'] = ['test']
-        tlog['password'] = ['123']
-        tlog['isAdmin'] = 1
-        obtresults = []
-        expresults = ['\ngiven file not found',
-                      '\nRead file from 0 to 100 are - \nDontChangeThisContent'
-                     ]
-        user_test = User()
-        user_test.createdusers = tlog
-        user_test.login('test', '123')
-        user_test.change_folder('testfolder1')
-        obtresults.append(user_test.read_file('test_read2.txt'))
-        obtresults.append(user_test.read_file('test_read.txt'))
-        user_test.quit()
-        login_rst = pandas.DataFrame(columns=['username'])
         login_rst.to_csv('ServerAccessSession/Users.csv', index=False)
 
         self.assertListEqual(obtresults, expresults)
