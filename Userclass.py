@@ -81,16 +81,12 @@ class User():
                  'write_file : "write_file <name>"\n',
                  'create_folder : "create_folder <name>"\n',
                 ]
-<<<<<<< HEAD
 
         guide = ''
         for i in range(len(cmnds)+1):
             line = ''.join([cmnds[i], cmnds[i+1]])
             guide += '********\n' + line
         return guide
-=======
-        return cmnds
->>>>>>> 941777ccac5ebf68108a3553f81255d5e899e4e2
 
 
     def session(self):
