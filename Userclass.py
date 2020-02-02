@@ -71,15 +71,15 @@ class User():
         This function returns the commands that can be used by the user
         and the functionality of the command
         '''
-        cmnds = ["register :","register <username> <password> <privilage>\n",
-                 'login : ','login <username> <password>\n',
-                 'quit : ','quit\n',
-                 'delete : ','delete <username>\n',
-                 'change_folder : ','change_folder <name>\n',
-                 'list : ','list of all files in the path\n',
-                 'read_file : ','read_file <name>\n',
-                 'write_file : ','write_file <name>\n',
-                 'create_folder : ','create_folder <name>\n'
+        cmnds = ["register :","For registering the new user ,command:register <username> <password> <privilage>\n",
+                 'login : ','To login, command:login <username> <password>\n',
+                 'quit : ','To logout, command:quit\n',
+                 'delete : ','To delete the user, command:delete <username>\n',
+                 'change_folder : ','To change the path, command:change_folder <name>\n',
+                 'list : ','list of all files in the path, command:list\n',
+                 'read_file : ','To read content from the file, command:read_file <name>\n',
+                 'write_file : ','To write content into the file, command:write_file <name>\n',
+                 'create_folder : ','To create new folder, command:create_folder <name>\n'
                 ]
 
         guide = ''
