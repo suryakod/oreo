@@ -71,26 +71,22 @@ class User():
         This function returns the commands that can be used by the user
         and the functionality of the command
         '''
-        cmnds = ['register : This command regsiters user'
-                 '\n=============================================================================',
-                 '\nlogin : This command logins the user once registererd'
-                 '\n=============================================================================',
-                 '\nquit : This command logouts from the session of a user'
-                 '\n=============================================================================',
-                 '\ndelete : This command deletes the user file. This command is only for Admin'
-                 '\n=============================================================================',
-                 '\nchange_folder : This command changes the current directory of the user'
-                 '\n=============================================================================',
-                 '\nlist : This command gives the information of the request placed'
-                 '\n=============================================================================',
-                 '\nread_file : This command reads data from the current working directory'
-                 '\n=============================================================================',
-                 '\nwrite_file : This command appends data to the current working directory'
-                 '\n=============================================================================',
-                 '\ncreate_folder : This command creates a new directory as per user command'
-                 '\n=============================================================================',
+        cmnds = ['register : "register <username> <password> <privilage>"\n',
+                 'login : "login <username> <password>"\n',
+                 'quit : "quit"\n',
+                 'delete : "delete <username>"\n',
+                 'change_folder : "change_folder <name>"\n',
+                 'list : "list"\n'
+                 'read_file : "read_file <name>"\n',
+                 'write_file : "write_file <name>"\n',
+                 'create_folder : "create_folder <name>"\n',
                 ]
-        print(cmnds)
+
+        guide = ''
+        for i in range(len(cmnds)+1):
+            line = ''.join([cmnds[i], cmnds[i+1]])
+            guide += '********\n' + line
+        return guide
 
 
     def session(self):
