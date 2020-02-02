@@ -90,7 +90,7 @@ class User():
                  '\ncreate_folder : This command creates a new directory as per user command'
                  '\n=============================================================================',
                 ]
-        print(cmnds)
+        return cmnds
 
 
     def session(self):
@@ -143,9 +143,9 @@ class User():
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
         directoryname = str(user_Id)
         if prep == 1:
-            filepath = "/oreo/Root/Admin/"
+            filepath = "GitHub/oreo/Root/Admin/"
         else:
-            filepath = "/oreo/Root/NotAdmin/"
+            filepath = "GitHub/oreo/Root/NotAdmin/"
 
         os.mkdir(os.path.join(filepath, directoryname))
         return "\nRegistered user successfully."
@@ -247,7 +247,7 @@ class User():
             self.quit()
 
         if n == 1:
-            filepath = "/oreo/Root/Admin/"
+            filepath = "GitHub/oreo/Root/Admin/"
         else:
             return "not admin"
         path = os.path.join(filepath, str(user_Id))
@@ -269,9 +269,9 @@ class User():
             return "\nLogin to continue"
         n = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if n == 1:
-            filepath = "/oreo/Root/Admin/"
+            filepath = "GitHub/oreo/Root/Admin/"
         else:
-            filepath = "/oreo/Root/NotAdmin/"
+            filepath = "GitHub/oreo/Root/NotAdmin/"
         path = os.path.join(filepath, str(self.user_Id))
         totaldir = [e for e in pathlib.Path(path).iterdir() if e.is_dir()]
         path_change = os.path.join(path, self.client_directory, directory)
@@ -299,9 +299,9 @@ class User():
             return "\nLogin to continue!!"
         p = (logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path = os.path.join("/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
+            path = os.path.join("GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
         else:
-            path = os.path.join("/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
+            path = os.path.join("GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
         totaldir = []
         for file_name in path.iterdir():
             totaldir.append([str(file_name), str(file_name.stat().st_size), str(file_name.stat().st_mtime)])
@@ -331,9 +331,9 @@ class User():
             return "\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path_d = os.path.join("/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
+            path_d = os.path.join("GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
         else:
-            path_d = os.path.join("/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
+            path_d = os.path.join("GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
 
         files = []
         for f in pathlib.Path(path_d).iterdir():
@@ -372,9 +372,9 @@ class User():
             return "\nLogin to continue!!"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path1 = os.path.join("/oreo/Root/Admin/", str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory, path)
         else:
-            path1 = os.path.join("/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
         t_file = []
         for fil in pathlib.Path(path1).iterdir():
             p = os.path.join(path1, fil)
@@ -408,9 +408,9 @@ class User():
             return"\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            curr_dir = "/oreo/Root/Admin/"
+            curr_dir = "GitHub/oreo/Root/Admin/"
         else:
-            curr_dir = "/oreo/Root/NotAdmin/"
+            curr_dir = "GitHub/oreo/Root/NotAdmin/"
         path1 = os.path.join(curr_dir, str(self.user_Id), self.client_directory)
         total_avail_dir = []
         for sub in pathlib.Path(path1).iterdir():
