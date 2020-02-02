@@ -71,26 +71,24 @@ class User():
         This function returns the commands that can be used by the user
         and the functionality of the command
         '''
-        cmnds = ['register : "register <username> <password> <privilage>"\n',
-                 'login : "login <username> <password>"\n',
-                 'quit : "quit"\n',
-                 'delete : "delete <username>"\n',
-                 'change_folder : "change_folder <name>"\n',
-                 'list : "list"\n'
-                 'read_file : "read_file <name>"\n',
-                 'write_file : "write_file <name>"\n',
-                 'create_folder : "create_folder <name>"\n',
+        cmnds = ["register :","register <username> <password> <privilage>\n",
+                 'login : ','login <username> <password>\n',
+                 'quit : ','quit\n',
+                 'delete : ','delete <username>\n',
+                 'change_folder : ','change_folder <name>\n',
+                 'list : ','list of all files in the path\n',
+                 'read_file : ','read_file <name>\n',
+                 'write_file : ','write_file <name>\n',
+                 'create_folder : ','create_folder <name>\n'
                 ]
-<<<<<<< HEAD
 
         guide = ''
-        for i in range(len(cmnds)+1):
+        for i in range(0,len(cmnds),2):
             line = ''.join([cmnds[i], cmnds[i+1]])
-            guide += '********\n' + line
+            guide += line + '********---------********\n' 
+            if(i == len(cmnds)):
+                break
         return guide
-=======
-        return cmnds
->>>>>>> 941777ccac5ebf68108a3553f81255d5e899e4e2
 
 
     def session(self):
