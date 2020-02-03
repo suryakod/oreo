@@ -38,12 +38,12 @@ def client_request(usr, message):
             return usr.change_folder(message.split(" ")[1])
         return "Enter correct command"
     if message.split(" ")[0] == "read_file":
-        if len(message.split(" ")) == 1:
+        if len(message.split(" ")) == 2:
             return usr.read_file(message.split(" ")[1])
         return "Enter correct command"
     if message.split(" ")[0] == "write_file":
-        if len(message.split(" ")) == 2:
-            return usr.write_file(message.split(" ")[1])
+        if len(message.split(" ")) >= 2:
+            return usr.write_file(message.split(" ")[1]," ".join(message.split(" ")[2:]))
         return "Enter correct command"
     if message.split(" ")[0] == "create_folder":
         if len(message.split(" ")) == 2:
