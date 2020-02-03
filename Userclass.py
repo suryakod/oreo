@@ -72,22 +72,22 @@ class User():
         This function returns the commands that can be used by the user
         and the functionality of the command
         '''
-        cmnds = ["register :","For registering the new user ,command:register <username> <password> <privilage>\n",
-                 'login : ','To login, command:login <username> <password>\n',
-                 'quit : ','To logout, command:quit\n',
-                 'delete1 : ','To delete the user, command:delete1 <username>\n',
-                 'change_folder : ','To change the path, command:change_folder <name>\n',
-                 'list : ','list of all files in the path, command:list\n',
-                 'read_file : ','To read content from the file, command:read_file <name>\n',
-                 'write_file : ','To write content into the file, command:write_file <name>\n',
-                 'create_folder : ','To create new folder, command:create_folder <name>\n'
+        cmnds = ["register :", "For registering the new user ,command:register <username> <password> <privilage>\n",
+                 'login : ', 'To login, command:login <username> <password>\n',
+                 'quit : ', 'To logout, command:quit\n',
+                 'delete1 : ', 'To delete the user, command:delete1 <username>\n',
+                 'change_folder : ', 'To change the path, command:change_folder <name>\n',
+                 'list : ', 'list of all files in the path, command:list\n',
+                 'read_file : ', 'To read content from the file, command:read_file <name>\n',
+                 'write_file : ', 'To write content into the file, command:write_file <name>\n',
+                 'create_folder : ', 'To create new folder, command:create_folder <name>\n'
                 ]
 
         guide = ''
-        for i in range(0,len(cmnds),2):
+        for i in range(0, len(cmnds), 2):
             line = ''.join([cmnds[i], cmnds[i+1]])
             guide += line + '********---------********\n'
-            if(i == len(cmnds)):
+            if i == len(cmnds):
                 break
         return guide
 
@@ -345,7 +345,7 @@ class User():
         for file in os.listdir(os.path.join(path2, self.user_Id, self.client_directory)):
             if os.path.isfile(os.path.join(path2, self.user_Id, self.client_directory, file)):
                 files.append(file)
-        
+
         if path not in files:
             return "\ngiven file not found"
         t_path = os.path.join(path_d, path)
@@ -388,7 +388,7 @@ class User():
         for file in os.listdir(os.path.join(path2, self.user_Id, self.client_directory)):
             if os.path.isfile(os.path.join(path2, self.user_Id, self.client_directory, file)):
                 t_file.append(file)
-        
+
         str1 = ""
         for i in data:
             str1 += i
