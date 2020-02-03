@@ -5,6 +5,7 @@ server from the client
 import pathlib
 import os
 import pandas
+import time
 from shutil import rmtree
 
 class User():
@@ -74,7 +75,7 @@ class User():
         cmnds = ["register :","For registering the new user ,command:register <username> <password> <privilage>\n",
                  'login : ','To login, command:login <username> <password>\n',
                  'quit : ','To logout, command:quit\n',
-                 'delete : ','To delete the user, command:delete <username>\n',
+                 'delete1 : ','To delete the user, command:delete1 <username>\n',
                  'change_folder : ','To change the path, command:change_folder <name>\n',
                  'list : ','list of all files in the path, command:list\n',
                  'read_file : ','To read content from the file, command:read_file <name>\n',
@@ -141,9 +142,9 @@ class User():
         logindata.to_csv("ServerAccessSession/Users.csv", index=False)
         directoryname = str(user_Id)
         if prep == 1:
-            filepath = "GitHub/oreo/Root/Admin/"
+            filepath = "Root/Admin/"
         else:
-            filepath = "GitHub/oreo/Root/NotAdmin/"
+            filepath = "Root/NotAdmin/"
 
         os.mkdir(os.path.join(filepath, directoryname))
         return "\nRegistered user successfully."
@@ -245,9 +246,9 @@ class User():
             self.quit()
 
         if n == 1:
-            filepath = "GitHub/oreo/Root/Admin/"
+            filepath = "Root/Admin/"
         else:
-            return "not admin"
+            filepath = "Root/NotAdmin"
         path = os.path.join(filepath, str(user_Id))
         rmtree(path)
         return"\nDeleted  " + user_Id + " successfully"
@@ -267,18 +268,22 @@ class User():
             return "\nLogin to continue"
         n = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if n == 1:
-            filepath = "GitHub/oreo/Root/Admin/"
+            filepath = "Root/Admin/"
         else:
-            filepath = "GitHub/oreo/Root/NotAdmin/"
+            filepath = "Root/NotAdmin/"
         path = os.path.join(filepath, str(self.user_Id))
-        totaldir = [e for e in pathlib.Path(path).iterdir() if e.is_dir()]
+
+        totaldir = []
+        for direc, files, sub in os.walk(os.path.join(path)):
+            totaldir.append(os.path.normpath(os.path.realpath(direc)))
         path_change = os.path.join(path, self.client_directory, directory)
         path_change = os.path.normpath(os.path.realpath(path_change))
+        print(self.client_directory)
         print(totaldir)
         print(path_change)
         if path_change in totaldir:
             self.client_directory = os.path.join(self.client_directory, directory)
-            return "\n changed directory to "+directory+"successful"
+            return "\n changed directory to "+directory+" successful"
         return"\nInput correct directory name"
 
 
@@ -297,12 +302,13 @@ class User():
             return "\nLogin to continue!!"
         p = (logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path = os.path.join("GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
+            path = os.path.join("Root/Admin/", str(self.user_Id), self.client_directory)
         else:
-            path = os.path.join("GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
+            path = os.path.join("Root/NotAdmin/", str(self.user_Id), self.client_directory)
         totaldir = []
-        for file_name in path.iterdir():
-            totaldir.append([str(file_name), str(file_name.stat().st_size), str(file_name.stat().st_mtime)])
+        for file_name in os.listdir(path):
+            a = os.stat(os.path.join(path, file_name))
+            totaldir.append([file_name, str(a.st_size), str(time.ctime(a.st_ctime))])
         details = "\nFile|Size|Modified Date"
         for data in totaldir:
             line = " | ".join([data[0], data[1], data[2]]) + "\n"
@@ -329,15 +335,17 @@ class User():
             return "\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path_d = os.path.join("GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory)
+            path_d = os.path.join("Root/Admin/", str(self.user_Id), self.client_directory)
+            path2 = "Root/Admin"
         else:
-            path_d = os.path.join("GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory)
+            path_d = os.path.join("Root/NotAdmin/", str(self.user_Id), self.client_directory)
+            path2 = "Root/NotAdmin"
 
         files = []
-        for f in pathlib.Path(path_d).iterdir():
-            path1 = os.path.join(path_d, f)
-            if pathlib.Path(path1).is_file():
-                files.append(f)
+        for file in os.listdir(os.path.join(path2, self.user_Id, self.client_directory)):
+            if os.path.isfile(os.path.join(path2, self.user_Id, self.client_directory, file)):
+                files.append(file)
+        
         if path not in files:
             return "\ngiven file not found"
         t_path = os.path.join(path_d, path)
@@ -350,10 +358,10 @@ class User():
         data = cont[indx*self.char_count:(indx+1)*self.char_count]
         self.rdindex[t_path] += 1
         self.rdindex[t_path] %= len(cont)//self.char_count+1
-        return "\n" + "Read file from" + old_inx + "to" + str(int(old_inx)+self.char_count) + "are\n" + data
+        return "\n" + "Read file from " + old_inx + " to " + str(int(old_inx)+self.char_count) + "are\n" + data
 
 
-    def write_file(self, path):
+    def write_file(self, path, data):
         '''
         This function appends data to the file in the diectotry
         as per the command given
@@ -370,23 +378,27 @@ class User():
             return "\nLogin to continue!!"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            path1 = os.path.join("GitHub/oreo/Root/Admin/", str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("Root/Admin/", str(self.user_Id), self.client_directory, path)
+            path2 = "Root/Admin/"
         else:
-            path1 = os.path.join("GitHub/oreo/Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
+            path1 = os.path.join("Root/NotAdmin/", str(self.user_Id), self.client_directory, path)
+            path2 = "Root/NotAdmin/"
         t_file = []
-        for fil in pathlib.Path(path1).iterdir():
-            p = os.path.join(path1, fil)
-            if p.is_file:
-                t_file.append(fil)
+
+        for file in os.listdir(os.path.join(path2, self.user_Id, self.client_directory)):
+            if os.path.isfile(os.path.join(path2, self.user_Id, self.client_directory, file)):
+                t_file.append(file)
+        
+        str1 = ""
+        for i in data:
+            str1 += i
         if path in t_file:
             with open(path1, "a+") as file:
-                msg = input("user input")
-                file.write(msg)
+                file.write(str1)
             file.close()
             return"\nSuccess written"
-        with open(t_file, "w+") as file:
-            msg = input("user input")
-            file.write(msg)
+        with open(path1, "w+") as file:
+            file.write(str1)
         file.close()
         return"\nSuccessfully written"
 
@@ -406,13 +418,14 @@ class User():
             return"\nLogin to Continue"
         p = int(logindata.loc[logindata['username'] == self.user_Id]['isAdmin'].values)
         if p == 1:
-            curr_dir = "GitHub/oreo/Root/Admin/"
+            curr_dir = "Root/Admin/"
         else:
-            curr_dir = "GitHub/oreo/Root/NotAdmin/"
+            curr_dir = "Root/NotAdmin/"
         path1 = os.path.join(curr_dir, str(self.user_Id), self.client_directory)
         total_avail_dir = []
-        for sub in pathlib.Path(path1).iterdir():
-            if sub.is_dir(os.path.join(path1, sub)):
+        for sub in os.listdir(path1):
+            path2 = os.path.join(path1, sub)
+            if os.path.isdir(path2):
                 total_avail_dir.append(sub)
         if pathnamefolder in total_avail_dir:
             return "\nThis directory is already created"
