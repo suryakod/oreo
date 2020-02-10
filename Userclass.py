@@ -86,7 +86,7 @@ class User():
         guide = ''
         for i in range(0,len(cmnds),2):
             line = ''.join([cmnds[i], cmnds[i+1]])
-            guide += line + '********---------********\n' 
+            guide += line + '********---------********\n'
             if(i == len(cmnds)):
                 break
         return guide
