@@ -72,6 +72,7 @@ class User():
         This function returns the commands that can be used by the user
         and the functionality of the command
         '''
+<<<<<<< HEAD
         cmnds = ["register :", "For registering the new user ,command:register <username> <password> <privilage>\n",
                  'login : ', 'To login, command:login <username> <password>\n',
                  'quit : ', 'To logout, command:quit\n',
@@ -81,6 +82,17 @@ class User():
                  'read_file : ', 'To read content from the file, command:read_file <name>\n',
                  'write_file : ', 'To write content into the file, command:write_file <name>\n',
                  'create_folder : ', 'To create new folder, command:create_folder <name>\n'
+=======
+        cmnds = ["register :","For registering the new user ,command:register <username> <password> <privilage>\n",
+                 'login : ','To login, command:login <username> <password>,Note:password should be in integer\n',
+                 'quit : ','To logout, command:quit\n',
+                 'delete1 : ','To delete the user, command:delete1 <username>\n',
+                 'change_folder : ','To change the path, command:change_folder <name>\n',
+                 'list : ','list of all files in the path, command:list\n',
+                 'read_file : ','To read content from the file, command:read_file <name>\n',
+                 'write_file : ','To write content into the file, command:write_file <name>\n',
+                 'create_folder : ','To create new folder, command:create_folder <name>\n'
+>>>>>>> 0125d4b92515721a1f85e714ee96d692122198bc
                 ]
 
         guide = ''
@@ -221,7 +233,7 @@ class User():
         If the request is done by a user that does not have admin privileges,
         then the request is denied.
         '''
-        n = 1
+
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
         if self.is_login != True:
             return "\nlogin to continue"
@@ -232,6 +244,7 @@ class User():
         if pws != int(logindata.loc[logindata['username'] == user_Id]['password']):
             return "\nEnter correct password"
         dataf = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
+        n = int(logindata.loc[logindata['username'] == user_Id]['isAdmin'].values)
         for us, psw, priv in zip(logindata['username'].tolist(), logindata['password'].tolist(), logindata['isAdmin'].tolist()):
             if us != user_Id:
                 dataf_1 = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
@@ -248,7 +261,7 @@ class User():
         if n == 1:
             filepath = "Root/Admin/"
         else:
-            filepath = "Root/NotAdmin"
+            filepath = "Root/NotAdmin/"
         path = os.path.join(filepath, str(user_Id))
         rmtree(path)
         return"\nDeleted  " + user_Id + " successfully"
