@@ -7,6 +7,7 @@ import os
 import pandas
 import time
 from shutil import rmtree
+import csv
 
 class User():
     """Used to create a user
@@ -243,8 +244,9 @@ class User():
             return "\nNo user with username "+ user_Id + "found"
         if pws != int(logindata.loc[logindata['username'] == user_Id]['password']):
             return "\nEnter correct password"
-        dataf = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
+        #dataf = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
         n = int(logindata.loc[logindata['username'] == user_Id]['isAdmin'].values)
+        '''
         for us, psw, priv in zip(logindata['username'].tolist(), logindata['password'].tolist(), logindata['isAdmin'].tolist()):
             if us != user_Id:
                 dataf_1 = pandas.DataFrame(columns=['username', 'password', 'isAdmin'])
@@ -253,6 +255,19 @@ class User():
                 dataf_1['isAdmin'] = priv
                 dataf = dataf.append(dataf_1)
         dataf.to_csv("ServerAccessSession/Users.csv", index=False)
+        '''
+        lines = list()
+        with open('ServerAccessSession/Users.csv', 'r') as readFile:
+            reader = csv.reader(readFile)
+            for row in reader:
+                lines.append(row)
+                for field in row:
+                    if field == user_Id:
+                        lines.remove(row)
+
+        with open('ServerAccessSession/Users.csv', 'w') as writeFile:
+            writer = csv.writer(writeFile)
+            writer.writerows(lines)
         logindata = pandas.read_csv('ServerAccessSession/Users.csv')
 
         if self.user_Id == user_Id:
